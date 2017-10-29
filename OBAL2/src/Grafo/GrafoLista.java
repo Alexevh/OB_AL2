@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Dominio.Punto;
 import Dominio.Sistema;
+import Dominio.Sistema.TipoPunto;
 
 public class GrafoLista {
 
@@ -107,9 +108,15 @@ public class GrafoLista {
 	public Punto buscarPunto(Double coordX, Double coordY) {
 		Punto pAux = new Punto(coordX, coordY);
 		for (Punto p : puntos) {
-			if (p.equals(pAux)) {
+			if (p != null && p.equals(pAux)) {
 				return p;
 			}
+		}
+		return null;
+	}
+	public Punto buscarPunto(int indice) {
+		if(indice >= 0 && indice < puntos.length) {
+			return puntos[indice];
 		}
 		return null;
 	}
@@ -175,63 +182,75 @@ public class GrafoLista {
 		}
 		return puntosFiltrados;
 	}
-	
-//	/* Buscar caminos mínimos desde un vértice/punto */
-//	public CaminosMinimos buscarCaminosMinimos(Punto p) {
-//		int origen = buscarIndice(p);
-//		if (origen >= 0) {
-//			return buscarCaminosMinimos(origen);
-//		}
-//		return null;
-//	}
-//
-//	public CaminosMinimos buscarCaminosMinimos(int origen) {
-//		boolean[] visitados = new boolean[cantidadMaxima];
-//		int[] costos = new int[cantidadMaxima];
-//		int[] predec = new int[cantidadMaxima];
-//		predec[origen] = -1;
-//		visitados[origen] = true;
-//
-//		for (int i = 0; i < cantidadMaxima; i++) {
-//			if (sonAdyacentes(origen, i)) {
-//				costos[i] = buscarTramo(origen, i);
-//				predec[i] = origen;
-//			} else {
-//				costos[i] = Integer.MAX_VALUE;
-//			}
-//		}
-//
-//		for (int k = 0; k < cantidadMaxima; k++) {
-//			int v = buscarPuntoSinVisitarConCostoMinimo(costos, visitados);
-//			visitados[v] = true;
-//
-//			NodoListaAdy w = listaAdyacencias[v].inicio;
-//			while (w != null) {
-//				if (!visitados[w.destino] && w.peso + costos[v] < costos[w.destino]) {
-//					costos[w.destino] = costos[v] + w.peso;
-//					predec[w.destino] = v;
-//				}
-//				w = w.sig;
-//			}
-//		}
-//
-//		CaminosMinimos caminos = new CaminosMinimos(costos, predec);
-//		return caminos;
-//	}
-//	public int buscarPuntoSinVisitarConCostoMinimo(int[] costos, boolean[] visitados) {
-//		int costoMin = Integer.MAX_VALUE;
-//		int indicePunto = -1;
-//		for (int i = 0; i < visitados.length; i++) {
-//			if (!visitados[i]) {
-//				if (costos[i] < costoMin) {
-//					costoMin = costos[i];
-//					indicePunto = i;
-//				}
-//			}
-//		}
-//		return indicePunto;
-//	}
-	
+
+	/* [DIJKSTRA] Buscar caminos mínimos desde un vértice/punto */
+	public CaminosMinimos buscarCaminosMinimos(Punto p, int capacidadRequerida) {
+		int origen = buscarIndice(p);
+		if (origen >= 0) {
+			return buscarCaminosMinimos(origen, capacidadRequerida);
+		}
+		return null;
+	}
+
+	public CaminosMinimos buscarCaminosMinimos(int origen, int capacidadRequerida) {
+		boolean[] visitados = new boolean[cantidadMaxima];
+		int[] costos = new int[cantidadMaxima];
+		int[] predec = new int[cantidadMaxima];
+		predec[origen] = -1;
+		costos[origen] = 0;
+		visitados[origen] = true;
+
+		for (int i = 0; i < cantidadMaxima; i++) {
+			if (i != origen) {
+				if (sonAdyacentes(origen, i)) {
+					costos[i] = buscarTramo(origen, i);
+					predec[i] = origen;
+				} else {
+					costos[i] = Integer.MAX_VALUE;
+				}
+			}
+		}
+		
+		int objetivo = -1;
+		for (int k = 0; k < cantidadMaxima; k++) {
+			int v = buscarPuntoSinVisitarConCostoMinimo(costos, visitados);
+			if(v >= 0) {
+				visitados[v] = true;
+				
+				if(puntos[v].esSiloConCapacidad(capacidadRequerida)) {
+					objetivo = v;
+					break;
+					
+				}
+				NodoListaAdy w = listaAdyacencias[v].inicio;
+				while (w != null) {
+					if (!visitados[w.destino] && w.peso + costos[v] < costos[w.destino]) {
+						costos[w.destino] = costos[v] + w.peso;
+						predec[w.destino] = v;
+					}
+					w = w.sig;
+				}
+			}
+		}
+
+		CaminosMinimos caminos = new CaminosMinimos(costos, predec);
+		caminos.setObjetivo(objetivo);
+		return caminos;
+	}
+
+	public int buscarPuntoSinVisitarConCostoMinimo(int[] costos, boolean[] visitados) {
+		int costoMin = Integer.MAX_VALUE;
+		int indicePunto = -1;
+		for (int i = 0; i < visitados.length; i++) {
+			if (!visitados[i]) {
+				if (costos[i] < costoMin) {
+					costoMin = costos[i];
+					indicePunto = i;
+				}
+			}
+		}
+		return indicePunto;
+	}
 
 	/* Buscar si dos vertices/puntos son adyacentes */
 	public boolean sonAdyacentes(Punto puntoA, Punto puntoB) {

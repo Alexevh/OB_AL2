@@ -11,8 +11,10 @@ public class ListaAdy {
 	public void insertar(int destino, int peso) {
 		if (destino >= 0 && peso >= 0) {
 			NodoListaAdy nodo = new NodoListaAdy(destino, peso);
-			inicio.ant = nodo;
-			nodo.sig = inicio;
+			if(inicio != null) {
+				inicio.ant = nodo;
+				nodo.sig = inicio;
+			}
 			inicio = nodo;
 			cantidad++;
 		}
@@ -94,7 +96,8 @@ public class ListaAdy {
 		NodoListaAdy nodoAux = nodo;
 
 		while (nodo != null) {
-			nodo = nodoAux.sig;
+			nodoAux = nodo;
+			nodo = nodo.sig;
 			nodoAux = null;
 			cantidad--;
 		}
