@@ -176,11 +176,17 @@ public class GrafoLista {
 
 	/* Buscar todos los puntos de un tipo espec�fico. */
 	public ArrayList<Punto> buscarPuntosPorTipo(Sistema.TipoPunto tipo) {
-		ArrayList<Punto> puntosFiltrados = new ArrayList();
+		ArrayList<Punto> puntosFiltrados = new ArrayList<Punto>();
 		for (Punto p : puntos) {
-			if (p.getTipo().equals(tipo)) {
-				puntosFiltrados.add(p);
+			try {
+				if (p.getTipo().equals(tipo)) {
+					puntosFiltrados.add(p);
+				}
+			} catch (Exception e)
+			{
+				
 			}
+			
 		}
 		return puntosFiltrados;
 	}
@@ -272,12 +278,26 @@ public class GrafoLista {
 		String urlMapa = "http://maps.googleapis.com/maps/api/staticmap?center=Montevideo,Uruguay&zoom=13&size=1200x600&maptype=roadmap&";
 		
 			
-		List<Punto> ListaSilos = buscarPuntosPorTipo(Sistema.TipoPunto.SILO);
-	
+		ArrayList<Punto> ListaSilos = buscarPuntosPorTipo(Sistema.TipoPunto.SILO);
+		ArrayList<Punto> ListaCiudades = buscarPuntosPorTipo(Sistema.TipoPunto.CIUDAD);
+		ArrayList<Punto> ListaPlantacion = buscarPuntosPorTipo(Sistema.TipoPunto.PLANTACION);
+		
 		for (Punto p: ListaSilos)
 		{
 			
-			urlMapa +="&markers=color:red|label:Silo|"+p.getCoordX()+","+p.getCoordY();
+			urlMapa +="&markers=color:green|label:Silo|"+p.getCoordX().toString()+","+p.getCoordY().toString();
+		}
+		
+		for (Punto p: ListaCiudades)
+		{
+			
+			urlMapa +="&markers=color:red|label:Ciudad|"+p.getCoordX().toString()+","+p.getCoordY().toString();
+		}
+		
+		for (Punto p: ListaPlantacion)
+		{
+			
+			urlMapa +="&markers=color:yellow|label:Plantacion|"+p.getCoordX().toString()+","+p.getCoordY().toString();
 		}
 		
 		return urlMapa;
