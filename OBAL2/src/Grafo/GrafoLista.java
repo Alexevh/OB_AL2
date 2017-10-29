@@ -1,10 +1,12 @@
 package Grafo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Dominio.Punto;
 import Dominio.Sistema;
 import Dominio.Sistema.TipoPunto;
+import Utiles.Retorno;
 
 public class GrafoLista {
 
@@ -13,7 +15,7 @@ public class GrafoLista {
 	private ListaAdy[] listaAdyacencias;
 	private Punto[] puntos;
 
-	/* Construir el grafo con una cantidad n de vértices posibles */
+	/* Construir el grafo con una cantidad n de vï¿½rtices posibles */
 	public GrafoLista(int cantidad) {
 
 		this.cantidadActual = 0;
@@ -38,7 +40,7 @@ public class GrafoLista {
 		return cantidadMaxima;
 	}
 
-	/* Deuelve true si el grafo está lleno */
+	/* Deuelve true si el grafo estï¿½ lleno */
 	public boolean estaLleno() {
 		return cantidadActual == cantidadMaxima;
 	}
@@ -71,7 +73,7 @@ public class GrafoLista {
 		}
 	}
 
-	/* Agregar un vértice/punto */
+	/* Agregar un vï¿½rtice/punto */
 	public void agregarPunto(Punto punto) {
 		int i = buscarIndice();
 		if (i >= 0) {
@@ -80,7 +82,7 @@ public class GrafoLista {
 		}
 	}
 
-	/* Eliminar un vértice */
+	/* Eliminar un vï¿½rtice */
 	public void eliminarPunto(Punto punto) {
 		int i = buscarIndice(punto);
 		if (puntos[i] != null) {
@@ -93,7 +95,7 @@ public class GrafoLista {
 
 	/*
 	 * Destruir el grafo, destruye el array de listas de adyacencia y el array de
-	 * vértices/puntos
+	 * vï¿½rtices/puntos
 	 */
 	public void destruir() {
 		for (int i = 1; i < cantidadMaxima; i++) {
@@ -122,8 +124,8 @@ public class GrafoLista {
 	}
 
 	/*
-	 * Buscar el índice de un lugar libre en el array de puntos. Devuelve -1 si el
-	 * array está lleno.
+	 * Buscar el ï¿½ndice de un lugar libre en el array de puntos. Devuelve -1 si el
+	 * array estï¿½ lleno.
 	 */
 	private int buscarIndice() {
 		int i = 0;
@@ -142,7 +144,7 @@ public class GrafoLista {
 		return i;
 	}
 
-	/* Buscar el índice de un Punto específico. Devuelve -1 si no se encontró. */
+	/* Buscar el ï¿½ndice de un Punto especï¿½fico. Devuelve -1 si no se encontrï¿½. */
 	public int buscarIndice(Punto p) {
 		int i = 0;
 		boolean encontre = false;
@@ -172,7 +174,7 @@ public class GrafoLista {
 		return listaAdyacencias[origen].buscarPeso(destino);
 	}
 
-	/* Buscar todos los puntos de un tipo específico. */
+	/* Buscar todos los puntos de un tipo especï¿½fico. */
 	public ArrayList<Punto> buscarPuntosPorTipo(Sistema.TipoPunto tipo) {
 		ArrayList<Punto> puntosFiltrados = new ArrayList();
 		for (Punto p : puntos) {
@@ -183,7 +185,7 @@ public class GrafoLista {
 		return puntosFiltrados;
 	}
 
-	/* [DIJKSTRA] Buscar caminos mínimos desde un vértice/punto */
+	/* [DIJKSTRA] Buscar caminos mï¿½nimos desde un vï¿½rtice/punto */
 	public CaminosMinimos buscarCaminosMinimos(Punto p, int capacidadRequerida) {
 		int origen = buscarIndice(p);
 		if (origen >= 0) {
@@ -262,5 +264,28 @@ public class GrafoLista {
 	public boolean sonAdyacentes(int a, int b) {
 		return this.listaAdyacencias[a].pertenece(b);
 	}
+	
+	
+	public String mostrarMapa()
+	{
+		
+		String urlMapa = "http://maps.googleapis.com/maps/api/staticmap?center=Montevideo,Uruguay&zoom=13&size=1200x600&maptype=roadmap&";
+		
+			
+		List<Punto> ListaSilos = buscarPuntosPorTipo(Sistema.TipoPunto.SILO);
+	
+		for (Punto p: ListaSilos)
+		{
+			
+			urlMapa +="&markers=color:red|label:Silo|"+p.getCoordX()+","+p.getCoordY();
+		}
+		
+		return urlMapa;
+		
+		
+		
+		
+	}
+	
 
 }
