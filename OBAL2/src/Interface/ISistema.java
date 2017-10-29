@@ -1,4 +1,6 @@
-package obli;
+package Interface;
+
+import Utiles.Retorno;
 
 public interface ISistema {
 
