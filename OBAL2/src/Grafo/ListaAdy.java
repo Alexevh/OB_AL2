@@ -69,6 +69,7 @@ public class ListaAdy {
 		while(nodo != null && !encontre) {
 			if(nodo.destino==posPunto) {
 				nodoRet = nodo;
+				encontre = true;
 			}
 			nodo = nodo.sig;
 		}

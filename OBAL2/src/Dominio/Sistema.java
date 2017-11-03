@@ -2,6 +2,7 @@ package Dominio;
 
 import java.util.ArrayList;
 
+import Arbol.Arbol;
 import Dominio.Productor;
 import Grafo.CaminosMinimos;
 import Grafo.GrafoLista;
@@ -13,6 +14,8 @@ import Utiles.Utilidades;
 public class Sistema implements ISistema {
 
 	private ArrayList<Productor> productores;
+	
+	private Arbol productoresArbol;
 
 	private GrafoLista grafo;
 
@@ -29,21 +32,52 @@ public class Sistema implements ISistema {
 	}
 
 	public Productor buscarProductor(String cedula_productor) {
-		for (Productor p : productores) {
-			if (p.getCedula().equals(cedula_productor)) {
-				return p;
-			}
+		
+		Productor p;
+		try {
+			p = this.productoresArbol.buscarPorCedula(cedula_productor).getDato();
+			
+		} catch (Exception e)
+		{
+			return null;
 		}
-		return null;
+		
+		return p;
 	}
 
 	public enum TipoPunto {
 		CIUDAD, PLANTACION, SILO
 	}
 
-	/* Para probar Caminos Mínimos. ELIMINAR PARA LA ENTREGA */
+	/* Para probar Caminos Mï¿½nimos. ELIMINAR PARA LA ENTREGA */
 	public GrafoLista getGrafo() {
 		return grafo;
+	}
+
+	
+	
+	public ArrayList<Productor> getProductores() {
+		return productores;
+	}
+
+	public void setProductores(ArrayList<Productor> productores) {
+		this.productores = productores;
+	}
+
+	public Arbol getProductoresArbol() {
+		return productoresArbol;
+	}
+
+	public void setProductoresArbol(Arbol productoresArbol) {
+		this.productoresArbol = productoresArbol;
+	}
+
+	public void setGrafo(GrafoLista grafo) {
+		this.grafo = grafo;
+	}
+
+	public static void setInstancia(Sistema instancia) {
+		Sistema.instancia = instancia;
 	}
 
 	@Override
@@ -56,6 +90,7 @@ public class Sistema implements ISistema {
 			instancia = getInstancia();
 			instancia.grafo = new GrafoLista(cantPuntos);
 			instancia.productores = new ArrayList();
+			instancia.productoresArbol = new Arbol();
 			ret.resultado = Resultado.OK;
 		}
 
@@ -79,7 +114,7 @@ public class Sistema implements ISistema {
 
 		if (!Utilidades.validarCedula(cedula)) {
 			ret.resultado = Resultado.ERROR_1;
-			ret.valorString = "Error: " + cedula + " no comple con el formato de cédula N.NNN.NNN-N.";
+			ret.valorString = "Error: " + cedula + " no comple con el formato de cï¿½dula N.NNN.NNN-N.";
 		} else if (!Utilidades.validarTelefono(celular)) {
 			ret.resultado = Resultado.ERROR_2;
 			ret.valorString = "Error: " + celular + " no comple con el formato de celular 09NNNNNNN.";
@@ -88,9 +123,9 @@ public class Sistema implements ISistema {
 			ret.valorString = "Error: " + email + " no comple con el formato de direcciones de e-mail.";
 		} else if (buscarProductor(cedula) != null) {
 			ret.resultado = Resultado.ERROR_4;
-			ret.valorString = "Error: ya existe un productor de cédula " + cedula + ".";
+			ret.valorString = "Error: ya existe un productor de cï¿½dula " + cedula + ".";
 		} else {
-			instancia.productores.add(new Productor(cedula, nombre, direccion, email, celular));
+			instancia.productoresArbol.insertar(new Productor(cedula, nombre, direccion, email, celular));
 			ret.resultado = Resultado.OK;
 		}
 
@@ -103,7 +138,7 @@ public class Sistema implements ISistema {
 
 		if (grafo.estaLleno()) {
 			ret.resultado = Resultado.ERROR_1;
-			ret.valorString = "Error: capacidad máxima alcanzada.";
+			ret.valorString = "Error: capacidad mï¿½xima alcanzada.";
 		} else if (grafo.buscarPunto(coordX, coordY) != null) {
 			ret.resultado = Resultado.ERROR_2;
 			ret.valorString = "Error: ya existe un punto en las coordenadas " + coordX + " y " + coordY + ".";
@@ -123,7 +158,7 @@ public class Sistema implements ISistema {
 
 		if (grafo.estaLleno()) {
 			ret.resultado = Resultado.ERROR_1;
-			ret.valorString = "Error: capacidad máxima alcanzada.";
+			ret.valorString = "Error: capacidad mï¿½xima alcanzada.";
 		} else if (capacidad <= 0) {
 			ret.resultado = Resultado.ERROR_2;
 			ret.valorString = "Error: capacidad debe ser mayor a 0.";
@@ -134,7 +169,7 @@ public class Sistema implements ISistema {
 			Productor productor = buscarProductor(cedula_productor);
 			if (productor == null) {
 				ret.resultado = Resultado.ERROR_4;
-				ret.valorString = "Error: no existe un productor de cédula " + cedula_productor + ".";
+				ret.valorString = "Error: no existe un productor de cï¿½dula " + cedula_productor + ".";
 			} else {
 				Plantacion plantacion = new Plantacion(nombre, coordX, coordY, productor, capacidad);
 				grafo.agregarPunto(plantacion);
@@ -151,7 +186,7 @@ public class Sistema implements ISistema {
 
 		if (grafo.estaLleno()) {
 			ret.resultado = Resultado.ERROR_1;
-			ret.valorString = "Error: capacidad máxima alcanzada.";
+			ret.valorString = "Error: capacidad mï¿½xima alcanzada.";
 		} else if (capacidad <= 0) {
 			ret.resultado = Resultado.ERROR_2;
 			ret.valorString = "Error: capacidad debe ser mayor a 0.";
@@ -250,7 +285,7 @@ public class Sistema implements ISistema {
 
 		if (punto == null || !punto.getTipo().equals(TipoPunto.PLANTACION)) {
 			ret.resultado = Resultado.ERROR_1;
-			ret.valorString = "Error: no exite una plantación en las coordenadas " + coordX + " y " + coordY + ".";
+			ret.valorString = "Error: no exite una plantaciï¿½n en las coordenadas " + coordX + " y " + coordY + ".";
 		} else {
 			Plantacion plantacion = (Plantacion) punto;
 			int capacidadRequerida = plantacion.getCapacidad();

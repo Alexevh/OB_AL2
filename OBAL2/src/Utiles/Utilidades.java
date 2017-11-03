@@ -40,5 +40,15 @@ public class Utilidades {
 		}
 		return valido;
 	}
+	
+	
+	/* Formateo una cedula*/
+	public static String formatearCedula(String cedula) {
+        String remplazado = cedula.replace("-", "");
+        remplazado = remplazado.replace(".", "");
+        return remplazado;
+    }
+	
+	
 
 }
