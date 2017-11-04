@@ -229,6 +229,7 @@ public class Arbol {
       
       if (aPadre.getNodoIzq()==aBorrar) 
       {
+    	  //ACA ESTÁS ELIMINADO OTROS NODOS POSIBLEMENTE.
           aPadre.setNodoIzq(aBorrar.getNodoDer());
       } else {
           NodoArbol hnoAnterior = aPadre.getNodoIzq();
@@ -236,6 +237,7 @@ public class Arbol {
           
           while (aux!=aBorrar)
           {
+        	  //ACA AUX PUEDE SER NULL
               hnoAnterior=aux;
               aux = aux.getNodoDer();
           }
