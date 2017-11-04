@@ -254,6 +254,7 @@ public class Arbol {
 //	  else {
 //	  if( a.getNodoIzq() != null && a.getNodoDer() != null ) {
 //		  
+  
 //	  a.setDato(a.getNodoDer().minimo());
 //	  a.setDer(a.getNodoDer().eliminarMin());
 //	  }
