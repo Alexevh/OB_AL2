@@ -51,6 +51,8 @@ public class PruebasProductor {
 		System.out.println("");
 		System.out.println("");
 		
+		Assert.assertEquals(Retorno.Resultado.OK, ret.resultado);
+		
 	}
 	
 	@Test
@@ -160,6 +162,9 @@ public class PruebasProductor {
 		
 		/*Veo que no este mas el prod*/
 		sis.getProductoresArbol().listarAscendente();
+		
+		
+		
 	}
 	
 }
