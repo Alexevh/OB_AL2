@@ -241,9 +241,30 @@ public class Arbol {
           }
           
           hnoAnterior.setNodoDer(aBorrar.getNodoDer());
-      }
-      
+      }  
   }
+  
+//	private NodoArbol borrarElemento (Productor x, NodoArbol a) {
+//	  if( a == null )
+//	  return a;
+//	  if(  x.getCedula().compareTo(a.getDato().getCedula()) == -1)
+//	  a.setNodoIzq(borrarElemento(x, a.getNodoIzq()));
+//	  else if( x.getCedula().compareTo(a.getDato().getCedula()) == 1)
+//	  a.setNodoDer(borrarElemento(x, a.getNodoDer()));
+//	  else {
+//	  if( a.getNodoIzq() != null && a.getNodoDer() != null ) {
+//		  
+//	  a.setDato(a.getNodoDer().minimo());
+//	  a.setDer(a.getNodoDer().eliminarMin());
+//	  }
+//	  else
+//	  if (a.getNodoIzq() != null)
+//	  a = a.getNodoIzq();
+//	  else
+//	  a = a.getNodoDer();
+//	  }
+//	  return a;
+//	  }
     
     
 	
