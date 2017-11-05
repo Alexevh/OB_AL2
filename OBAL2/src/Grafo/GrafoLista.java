@@ -275,7 +275,7 @@ public class GrafoLista {
 	public String mostrarMapa()
 	{
 		
-		String urlMapa = "http://maps.googleapis.com/maps/api/staticmap?center=Montevideo,Uruguay&zoom=13&size=1200x600&maptype=roadmap&";
+		String urlMapa = "http://maps.googleapis.com/maps/api/staticmap?center=Durazno,Uruguay&zoom=7&size=2400x1200&maptype=roadmap&";
 		
 			
 		ArrayList<Punto> ListaSilos = buscarPuntosPorTipo(Sistema.TipoPunto.SILO);

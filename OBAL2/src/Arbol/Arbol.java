@@ -220,18 +220,145 @@ public class Arbol {
       return buscar(raiz, elemento);
   }
   
+    
+    
+    public boolean borrarElemento(Productor elem)
+    {
+    	NodoArbol auxiliar = raiz;
+    	NodoArbol padre = raiz;
+    	
+    	boolean esHijoIzq = true;
+    	
+    	while (auxiliar.getDato()!=elem)
+    	{
+    		padre = auxiliar;
+    		if (elem.compareTo(auxiliar.getDato())==1)
+    		{
+    			esHijoIzq = true;
+    			auxiliar=auxiliar.getNodoIzq();
+    		} else {
+    			esHijoIzq = false;
+    			auxiliar=auxiliar.getNodoDer();
+    		}
+    		
+    		if(auxiliar==null)
+    		{
+    			return false;
+    		}
+    	}
+    	
+    	/* El nodo es Hoja o unico nodo */
+    	if (auxiliar.getNodoIzq()==null && auxiliar.getNodoDer()==null)
+    	{
+    		if(auxiliar.getDato()==raiz.getDato())
+    		{
+    			raiz=null;
+    		} else if (esHijoIzq)
+    		{
+    			padre.setNodoIzq(null);
+    		} else {
+    			padre.setNodoDer(null);
+    		}
+    	} else if(auxiliar.getNodoDer()==null)
+    	{
+    		if(auxiliar==raiz)
+    		{
+    			raiz=auxiliar.getNodoIzq();
+    		} else if (esHijoIzq)
+    		{
+    			padre.setNodoIzq(auxiliar.getNodoIzq());
+    		} else 
+    		{
+    			padre.setNodoDer(auxiliar.getNodoIzq());
+    		}
+    	} else if (auxiliar.getNodoIzq()==null)
+    	{
+    		
+    		if(auxiliar==raiz)
+    		{
+    			raiz=auxiliar.getNodoDer();
+    		} else if (esHijoIzq)
+    		{
+    			padre.setNodoIzq(auxiliar.getNodoDer());
+    		} else 
+    		{
+    			padre.setNodoDer(auxiliar.getNodoDer());
+    		}
+    		
+    		
+    		
+    	} else {
+    		NodoArbol reemplazo = obtenerNodoReemplazo(auxiliar);
+    		if (auxiliar==raiz)
+    		{
+    			raiz=reemplazo;
+    		} else if(esHijoIzq)
+    		{
+    			padre.setNodoIzq(reemplazo);
+    		} else 
+    		{
+    			padre.setNodoDer(reemplazo);
+    		}
+    		
+    		reemplazo.setNodoIzq(auxiliar.getNodoIzq());
+    	}
+    	
+    	
+    	
+    	return true;
+    }
+    
+    
+    public NodoArbol obtenerNodoReemplazo(NodoArbol nodo)
+    {
+    	NodoArbol reemplazarPadre = nodo;
+    	NodoArbol reemplazo = nodo;
+    	NodoArbol aux = nodo.getNodoDer();
+    	
+    	while(aux!=null)
+    	{
+    		reemplazarPadre = reemplazo;
+    		reemplazo = aux;
+    		aux = aux.getNodoIzq();
+    	}
+    	
+    	if (reemplazo!=nodo.getNodoDer())
+    	{
+    		reemplazarPadre.setNodoIzq(reemplazo.getNodoDer());
+    		reemplazo.setNodoDer(nodo.getNodoDer());
+    		
+    	}
+    	
+    	
+    	
+    	
+    	
+    	return reemplazo;
+    }
+    
+    
   
+    /*
   public void borrarElemento(Productor elem)
   {
       NodoArbol aBorrar = buscar(elem);
       
-      NodoArbol aPadre = buscar(raiz, elem);
+      NodoArbol aPadre = buscar(raiz.getDato());
+      
+      
       
       if (aPadre.getNodoIzq()==aBorrar) 
       {
-    	  //ACA ESTÁS ELIMINADO OTROS NODOS POSIBLEMENTE.
-          aPadre.setNodoIzq(aBorrar.getNodoDer());
+    	  if (aBorrar.getNodoDer()==null)
+    	  {
+    		  aPadre.setNodoIzq(null);
+    	  } else {
+    		  aPadre.setNodoIzq(aBorrar.getNodoDer());
+    	  }
+          
+          
       } else {
+    	  
           NodoArbol hnoAnterior = aPadre.getNodoIzq();
           NodoArbol aux = aPadre.getNodoIzq();
           
@@ -239,12 +366,20 @@ public class Arbol {
           {
         	  //ACA AUX PUEDE SER NULL
               hnoAnterior=aux;
-              aux = aux.getNodoDer();
+              
+              if (aux.getNodoDer()!=null)
+              {
+            	  aux = aux.getNodoDer();
+              } 
+              
           }
           
           hnoAnterior.setNodoDer(aBorrar.getNodoDer());
+          //hnoAnterior.setNodoDer(null);
       }  
   }
+  
+  */
   
 //	private NodoArbol borrarElemento (Productor x, NodoArbol a) {
 //	  if( a == null )

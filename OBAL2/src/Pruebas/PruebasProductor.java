@@ -127,6 +127,34 @@ public class PruebasProductor {
 	
 	
 	@Test
+	public void registrarProductorCedulaExistente()
+	{
+		Retorno ret = new Retorno();
+		Sistema sis = Sistema.getInstancia();
+		int n;
+		
+		// INICIO EL SISTEMA
+		System.out.println("INICIO EL SISTEMA");
+		n = 6;
+		ret = sis.inicializarSistema(n);
+		
+		
+		/* Registro 2 productores */
+		
+		// REGISTRO DOS PRODUCTORES
+		System.out.println("REGISTRO DOS PRODUCTORES");
+		ret = sis.registrarProductor("1.111.111-1", "ElProductor1", "Direcci�nA", "mail1@mail.com", "091111111");
+	
+		ret = sis.registrarProductor("1.111.111-1", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
+	
+		
+		
+		Assert.assertEquals(Retorno.Resultado.ERROR_4, ret.resultado);
+	}
+	
+	
+	
+	@Test
 	public void borrarProductor() {
 		
 		Retorno ret = new Retorno();
@@ -143,11 +171,20 @@ public class PruebasProductor {
 		/* Registro 2 productores */
 		
 		// REGISTRO DOS PRODUCTORES
+		ret = sis.registrarProductor("4.444.444-4", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
+		ret = sis.registrarProductor("8.888.888-8", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
+		System.out.println("REGISTRAR PRODUCTOR: " + ret.resultado);
 		System.out.println("REGISTRO DOS PRODUCTORES");
 		ret = sis.registrarProductor("1.111.111-1", "ElProductor1", "Direcci�nA", "mail1@mail.com", "091111111");
 		System.out.println("REGISTRAR PRODUCTOR: " + ret.resultado);
 		ret = sis.registrarProductor("2.222.222-2", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
 		System.out.println("REGISTRAR PRODUCTOR: " + ret.resultado);
+		
+		ret = sis.registrarProductor("5.555.555-5", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
+		ret = sis.registrarProductor("6.666.666-6", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
+		ret = sis.registrarProductor("7.777.777-7", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
+		ret = sis.registrarProductor("3.333.333-3", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
+		
 		System.out.println("");
 		System.out.println("");
 		
@@ -155,7 +192,7 @@ public class PruebasProductor {
 		sis.getProductoresArbol().listarAscendente();
 		
 		/*Obtengo el productor a borrar*/
-		Productor p = sis.getProductoresArbol().buscarPorCedula("1.111.111-1").getDato();
+		Productor p = sis.getProductoresArbol().buscarPorCedula("3.333.333-3").getDato();
 		
 		/* Lo eliminino del arbol*/
 		sis.getProductoresArbol().borrarElemento(p);
