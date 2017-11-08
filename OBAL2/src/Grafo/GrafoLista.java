@@ -3,6 +3,8 @@ package Grafo;
 import java.util.ArrayList;
 import java.util.List;
 
+import Cola.Cola;
+import Cola.NodoCola;
 import Dominio.Punto;
 import Dominio.Sistema;
 import Dominio.Sistema.TipoPunto;
@@ -190,6 +192,66 @@ public class GrafoLista {
 		}
 		return puntosFiltrados;
 	}
+	
+	
+	/* Buscar caminos minimos desde un vertice Ciudad, la idea es  buscar todas las
+	 * plantaciones que esten a 20 kilometros o menos de la ciudad o punto de origen */
+	public CaminosMinimos buscarCaminosMinimosPlantacion(Punto p, int kilometros) {
+		int origen = buscarIndice(p);
+		if (origen >= 0) {
+			return buscarCaminosMinimosCiudad(origen, kilometros);
+		}
+		return null;
+	}
+	
+	public CaminosMinimos buscarCaminosMinimosCiudad(int origen, int kilometros) {
+		boolean[] visitados = new boolean[cantidadMaxima];
+		int[] costos = new int[cantidadMaxima];
+		int[] predec = new int[cantidadMaxima];
+		predec[origen] = -1;
+		costos[origen] = 0;
+		visitados[origen] = true;
+
+		for (int i = 0; i < cantidadMaxima; i++) {
+			if (i != origen) {
+				if (sonAdyacentes(origen, i)) {
+					costos[i] = buscarTramo(origen, i);
+					predec[i] = origen;
+				} else {
+					costos[i] = Integer.MAX_VALUE;
+				}
+			}
+		}
+		
+		int objetivo = -1;
+		for (int k = 0; k < cantidadMaxima; k++) {
+			int v = buscarPuntoSinVisitarConCostoMinimo(costos, visitados);
+			if(v >= 0) {
+				visitados[v] = true;
+				
+				if(puntos[v].getTipo().equals(TipoPunto.PLANTACION)) {
+					objetivo = v;
+					break;
+					
+				}
+				
+				NodoListaAdy w = listaAdyacencias[v].inicio;
+				while (w != null) {
+					if (!visitados[w.destino] && w.peso + costos[v] < costos[w.destino]) {
+						costos[w.destino] = costos[v] + w.peso;
+						predec[w.destino] = v;
+					}
+					w = w.sig;
+				}
+			}
+		}
+
+		CaminosMinimos caminos = new CaminosMinimos(costos, predec);
+		caminos.setObjetivo(objetivo);
+		return caminos;
+	}
+	
+	
 
 	/* [DIJKSTRA] Buscar caminos m�nimos desde un v�rtice/punto */
 	public CaminosMinimos buscarCaminosMinimos(Punto p, int capacidadRequerida) {
@@ -306,6 +368,33 @@ public class GrafoLista {
 		
 		
 	}
+	
+	
+	public void obtenerCaminoBFS(NodoListaAdy a)
+	{
+		Cola cola = new Cola();
+	 
+		NodoListaAdy distancias[];
+		
+		cola.insertar(a);
+		//distancias[a] = 0;
+		NodoCola actual;
+		
+		NodoCola   siguiente;
+		
+		while(!cola.estaVacia())
+		{
+			actual = cola.quitar();
+			for (int i=0; i< this.listaAdyacencias.length;i++)
+			{
+				
+			}
+		}
+		
+		
+	}
+	
+	
 	
 
 }

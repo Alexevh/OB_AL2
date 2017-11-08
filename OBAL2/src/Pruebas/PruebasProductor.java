@@ -192,7 +192,7 @@ public class PruebasProductor {
 		sis.getProductoresArbol().listarAscendente();
 		
 		/*Obtengo el productor a borrar*/
-		Productor p = sis.getProductoresArbol().buscarPorCedula("3.333.333-3").getDato();
+		Productor p = sis.getProductoresArbol().buscarPorCedula("4.444.444-4").getDato();
 		
 		/* Lo eliminino del arbol*/
 		sis.getProductoresArbol().borrarElemento(p);
