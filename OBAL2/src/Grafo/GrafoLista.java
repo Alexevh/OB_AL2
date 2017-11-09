@@ -204,7 +204,7 @@ public class GrafoLista {
 		return null;
 	}
 	
-	public CaminosMinimos buscarCaminosMinimosCiudad(int origen, int kilometros) {
+	public CaminosMinimos buscarCaminosMinimosCiudad(int origen, int km) {
 		boolean[] visitados = new boolean[cantidadMaxima];
 		int[] costos = new int[cantidadMaxima];
 		int[] predec = new int[cantidadMaxima];
@@ -231,13 +231,16 @@ public class GrafoLista {
 				
 				if(puntos[v].getTipo().equals(TipoPunto.PLANTACION)) {
 					objetivo = v;
-					break;
+					
+					//break;
 					
 				}
-				
+				/* No entra a este bucle, cuando entre le ponemos que valide menos de KM de distancia*/
 				NodoListaAdy w = listaAdyacencias[v].inicio;
+				
+				
 				while (w != null) {
-					if (!visitados[w.destino] && w.peso + costos[v] < costos[w.destino]) {
+					if (!visitados[w.destino] && w.peso + costos[v] < km) {
 						costos[w.destino] = costos[v] + w.peso;
 						predec[w.destino] = v;
 					}
@@ -250,6 +253,8 @@ public class GrafoLista {
 		caminos.setObjetivo(objetivo);
 		return caminos;
 	}
+	
+	
 	
 	
 

@@ -121,21 +121,38 @@ public class TestMapaGoogle {
 		System.out.println("REGISTRAR TRAMO: " + ret.resultado);
 		System.out.println("");
 		
+		// INTENTO REGISTRAR UN SILO CON CAPACIDAD IGUAL A 0
+		System.out.println("INTENTO REGISTRAR UN SILO CON CAPACIDAD IGUAL A 0");
+		ret = sis.registrarSilo("SiloA", -31.50, -57.30, 10);
+		System.out.println("REGISTRAR SILO: " + ret.resultado + " [" + ret.valorString + "]");
+		System.out.println("");
+		
 		
 		// REGISTRO TRAMO DEL PUNTO 0 AL 1 Salto a una plantacion a 28KM
 		System.out.println("REGISTRO TRAMO");
 		ret = sis.registrarTramo(-31.23, -57.57, -34.28, -57.50, 28);
 		System.out.println("REGISTRAR TRAMO: " + ret.resultado);
 		System.out.println("");
+		
+		
+		
 	
 		// REGISTRO TRAMO DEL PUNTO 0 AL 1 Salto a una plantacion a 18KM
 				System.out.println("REGISTRO TRAMO");
 				ret = sis.registrarTramo(-31.23, -57.57, -34.58, -56.50, 18);
 				System.out.println("REGISTRAR TRAMO: " + ret.resultado);
 				System.out.println("");
+				
+				
+				// REGISTRO TRAMO DEL PUNTO 0 AL 1 Salto a una plantacion a 18KM
+				System.out.println("REGISTRO TRAMO");
+				ret = sis.registrarTramo(-31.50, -57.30, -34.58, -56.50, 28);
+				System.out.println("REGISTRAR TRAMO: " + ret.resultado);
+				System.out.println("");
+			
 		
 		Punto p = sis.getGrafo().buscarPunto(0);
-		CaminosMinimos caminos = sis.getGrafo().buscarCaminosMinimosPlantacion(p, 20);
+		CaminosMinimos caminos = sis.getGrafo().buscarCaminosMinimosPlantacion(p, 300);
 		//System.out.println(caminos.resultadoOrdenadoInverso());
 		ArrayList<Integer> listaPredecesores = caminos.resultadoOrdenadoInverso();
 		
