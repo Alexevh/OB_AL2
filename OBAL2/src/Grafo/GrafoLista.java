@@ -211,6 +211,7 @@ public class GrafoLista {
 		predec[origen] = -1;
 		costos[origen] = 0;
 		visitados[origen] = true;
+		ArrayList<Integer> objetivos = new ArrayList<Integer>();
 
 		for (int i = 0; i < cantidadMaxima; i++) {
 			if (i != origen) {
@@ -231,7 +232,7 @@ public class GrafoLista {
 				
 				if(puntos[v].getTipo().equals(TipoPunto.PLANTACION)) {
 					objetivo = v;
-					
+					objetivos.add(v);
 					//break;
 					
 				}
@@ -374,30 +375,37 @@ public class GrafoLista {
 		
 	}
 	
-	
-	public void obtenerCaminoBFS(NodoListaAdy a)
-	{
-		Cola cola = new Cola();
-	 
-		NodoListaAdy distancias[];
+	public String listadoDePlantacionesEnCiudad(Double coordX, Double CoordY) {
 		
-		cola.insertar(a);
-		//distancias[a] = 0;
-		NodoCola actual;
+		String urlMapa = "http://maps.googleapis.com/maps/api/staticmap?center=Durazno,Uruguay&zoom=7&size=2400x1200&maptype=roadmap&";
+
+		Punto p = buscarPunto(coordX, CoordY);
 		
-		NodoCola   siguiente;
+		/* Marco en el mapa la ciudad */
+		urlMapa +="&markers=color:red|label:Ciudad|"+p.getCoordX().toString()+","+p.getCoordY().toString();
 		
-		while(!cola.estaVacia())
-		{
-			actual = cola.quitar();
-			for (int i=0; i< this.listaAdyacencias.length;i++)
-			{
-				
-			}
-		}
+		CaminosMinimos caminos = buscarCaminosMinimosPlantacion(p, 20);
+		
+		 for (int i=0; i<caminos.getCostos().length; i++)
+		 {
+			
+				 Punto p2 = buscarPunto(i);
+				 int[] indiceCostos = caminos.getCostos();
+				 int indice = indiceCostos[i];
+				 
+				 if (p2.getTipo().equals(TipoPunto.PLANTACION) && indice < 20)
+				 {
+					 urlMapa +="&markers=color:yellow|label:Plantacion|"+p2.getCoordX().toString()+","+p2.getCoordY().toString();
+				 }
+			
+		 }
 		
 		
+		
+		
+		return urlMapa;
 	}
+	
 	
 	
 	

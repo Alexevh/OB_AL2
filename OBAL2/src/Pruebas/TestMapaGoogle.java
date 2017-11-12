@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import Dominio.Punto;
 import Dominio.Sistema;
+import Dominio.Sistema.TipoPunto;
 import Grafo.CaminosMinimos;
 import Utiles.Retorno;
 import junit.framework.Assert;
@@ -61,7 +62,7 @@ public class TestMapaGoogle {
 				System.out.println("REGISTRO DOS PLANTACIONES");
 				ret = sis.registrarPlantacion("PlantacionA", -33.13, -54.22, "1.111.111-1", 10);
 				System.out.println("REGISTRAR PLANTACI�N: " + ret.resultado);
-				ret = sis.registrarPlantacion("PlantacionB", -34.28, -57.50, "2.222.222-2", 15);
+				ret = sis.registrarPlantacion("PlantacionB", -31.28, -57.50, "2.222.222-2", 15);
 				System.out.println("REGISTRAR PLANTACI�N: " + ret.resultado);
 				System.out.println("");
 				
@@ -106,21 +107,15 @@ public class TestMapaGoogle {
 		
 		// REGISTRO DOS PLANTACIONES
 		System.out.println("REGISTRO DOS PLANTACIONES");
-		ret = sis.registrarPlantacion("PlantacionA", -33.13, -54.22, "1.111.111-1", 10);
+		ret = sis.registrarPlantacion("PlantacionDaiman", -30.56, -57.31, "1.111.111-1", 10);
 		System.out.println("REGISTRAR PLANTACI�N: " + ret.resultado);
-		ret = sis.registrarPlantacion("PlantacionB", -34.28, -57.50, "2.222.222-2", 15);
+		ret = sis.registrarPlantacion("PlantacionB", -31.30, -58.01, "2.222.222-2", 15);
 		System.out.println("REGISTRAR PLANTACI�N: " + ret.resultado);
 		System.out.println("");
 		ret = sis.registrarPlantacion("PlantacionC", -34.58, -56.50, "2.222.222-2", 19);
 		System.out.println("REGISTRAR PLANTACI�N: " + ret.resultado);
 		System.out.println("");
-		
-		// REGISTRO TRAMO DEL PUNTO 0 AL 1 Salto a una plantacion a 8KM
-		System.out.println("REGISTRO TRAMO");
-		ret = sis.registrarTramo(-31.23, -57.57, -33.13, -54.22, 8);
-		System.out.println("REGISTRAR TRAMO: " + ret.resultado);
-		System.out.println("");
-		
+	
 		// INTENTO REGISTRAR UN SILO CON CAPACIDAD IGUAL A 0
 		System.out.println("INTENTO REGISTRAR UN SILO CON CAPACIDAD IGUAL A 0");
 		ret = sis.registrarSilo("SiloA", -31.50, -57.30, 10);
@@ -128,38 +123,32 @@ public class TestMapaGoogle {
 		System.out.println("");
 		
 		
-		// REGISTRO TRAMO DEL PUNTO 0 AL 1 Salto a una plantacion a 28KM
+
+		// REGISTRO TRAMO DEL PUNTO 0 AL 1 Salto a una plantacion a 8KM
 		System.out.println("REGISTRO TRAMO");
-		ret = sis.registrarTramo(-31.23, -57.57, -34.28, -57.50, 28);
+		ret = sis.registrarTramo(-31.50, -57.30, -30.56, -57.31, 8);
+		System.out.println("REGISTRAR TRAMO: " + ret.resultado);
+		System.out.println("");
+		
+		// REGISTRO TRAMO DEL PUNTO 0 AL 1 Salto a una plantacion a 15KM
+		System.out.println("REGISTRO TRAMO");
+		ret = sis.registrarTramo(-31.50, -57.30, -31.30, -58.01, 15);
 		System.out.println("REGISTRAR TRAMO: " + ret.resultado);
 		System.out.println("");
 		
 		
-		
-	
-		// REGISTRO TRAMO DEL PUNTO 0 AL 1 Salto a una plantacion a 18KM
+		// REGISTRO TRAMO DEL PUNTO 0 AL 1 Salto a una plantacion a 25KM
 				System.out.println("REGISTRO TRAMO");
-				ret = sis.registrarTramo(-31.23, -57.57, -34.58, -56.50, 18);
+				ret = sis.registrarTramo(-31.50, -57.30, -34.58, -56.50, 25);
 				System.out.println("REGISTRAR TRAMO: " + ret.resultado);
 				System.out.println("");
 				
-				
-				// REGISTRO TRAMO DEL PUNTO 0 AL 1 Salto a una plantacion a 18KM
-				System.out.println("REGISTRO TRAMO");
-				ret = sis.registrarTramo(-31.50, -57.30, -34.58, -56.50, 28);
-				System.out.println("REGISTRAR TRAMO: " + ret.resultado);
-				System.out.println("");
-			
+
 		
-		Punto p = sis.getGrafo().buscarPunto(0);
-		CaminosMinimos caminos = sis.getGrafo().buscarCaminosMinimosPlantacion(p, 300);
-		//System.out.println(caminos.resultadoOrdenadoInverso());
-		ArrayList<Integer> listaPredecesores = caminos.resultadoOrdenadoInverso();
+		String mapa = sis.getGrafo().listadoDePlantacionesEnCiudad(-31.50, -57.30);
+		System.out.println(mapa);
 		
-		for (int i=0; i<caminos.resultadoOrdenadoInverso().size(); i++)
-		{
-			System.out.println("Nodo "+listaPredecesores.get(i));
-		}
+
 		
 	
 		
