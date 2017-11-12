@@ -377,6 +377,36 @@ public class GrafoLista {
 	
 	public String listadoDePlantacionesEnCiudad(Double coordX, Double CoordY) {
 		
+		String urlMapa = "";
+
+		Punto p = buscarPunto(coordX, CoordY);
+		
+		
+		
+		CaminosMinimos caminos = buscarCaminosMinimosPlantacion(p, 20);
+		
+		 for (int i=0; i<caminos.getCostos().length; i++)
+		 {
+			
+				 Punto p2 = buscarPunto(i);
+				 int[] indiceCostos = caminos.getCostos();
+				 int indice = indiceCostos[i];
+				 
+				 if (p2.getTipo().equals(TipoPunto.PLANTACION) && indice < 20)
+				 {
+					 urlMapa +=p2.getCoordX().toString()+";"+p2.getCoordY().toString()+"|";
+				 }
+			
+		 }
+		
+		
+		
+		
+		return urlMapa;
+	}
+	
+public String mapaDePlantacionesEnCiudad(Double coordX, Double CoordY) {
+		
 		String urlMapa = "http://maps.googleapis.com/maps/api/staticmap?center=Durazno,Uruguay&zoom=7&size=2400x1200&maptype=roadmap&";
 
 		Punto p = buscarPunto(coordX, CoordY);
@@ -405,8 +435,6 @@ public class GrafoLista {
 		
 		return urlMapa;
 	}
-	
-	
 	
 	
 
