@@ -6,6 +6,7 @@ public class HashNode {
 	private Punto punto;
 	private int indiceNodo;
 	public Estado estado;
+	
 	public enum Estado {
 		OCUPADO, LIBRE, SUPRIMIDO
 	}

@@ -21,6 +21,7 @@ public class PruebaHash {
 		HT.agregar(p5);
 		
 		HT.eliminar(p2.getCoordX(),p2.getCoordY());
+		
 		System.out.println(HT.buscarIndice(200.00, 200.00));
 		System.out.println(HT.buscarIndice(300.00, 200.00));
 		System.out.println(HT.buscarIndice(400.00, 200.00));
