@@ -27,16 +27,14 @@ public class PruebasSistema {
 		Retorno ret = new Retorno();
 		
 		// INICIO EL SISTEMA
-		System.out.println("INICIO EL SISTEMA");
+	
 		int n = 6;
 		ret = sis.inicializarSistema(n);
-		System.out.println("INICIALIZACI�N: " + ret.resultado);
-		System.out.println("");
+		
 		// DESTRUIR EL SISTEMA
-				System.out.println("DESTRUIR EL SISTEMA");
+			
 				ret = sis.destruirSistema();
-				System.out.println("DESTRUCCI�N: " + ret.resultado);
-				System.out.println("");
+				
 				
 	Assert.assertEquals(Retorno.Resultado.OK, ret.resultado);
 		

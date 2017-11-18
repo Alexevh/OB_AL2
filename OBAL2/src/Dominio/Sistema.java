@@ -1,9 +1,12 @@
 package Dominio;
 
+import java.awt.Desktop;
+import java.net.URL;
 import java.util.ArrayList;
 
 import Arbol.Arbol;
 import Dominio.Productor;
+import Dominio.Sistema.TipoPunto;
 import Grafo.CaminosMinimos;
 import Grafo.GrafoLista;
 import Interface.ISistema;
@@ -272,7 +275,39 @@ public class Sistema implements ISistema {
 	public Retorno mapaEstado() {
 		Retorno ret = new Retorno();
 
-		ret.resultado = Resultado.NO_IMPLEMENTADA;
+		String urlMapa = "http://maps.googleapis.com/maps/api/staticmap?center=Durazno,Uruguay&zoom=7&size=2400x1200&maptype=roadmap&";
+		
+		
+		ArrayList<Punto> ListaSilos = instancia.grafo.buscarPuntosPorTipo(Sistema.TipoPunto.SILO);
+		ArrayList<Punto> ListaCiudades = instancia.grafo.buscarPuntosPorTipo(Sistema.TipoPunto.CIUDAD);
+		ArrayList<Punto> ListaPlantacion = instancia.grafo.buscarPuntosPorTipo(Sistema.TipoPunto.PLANTACION);
+		
+		for (Punto p: ListaSilos)
+		{
+			
+			urlMapa +="&markers=color:green%7Clabel:Silo%7C"+p.getCoordX().toString()+","+p.getCoordY().toString();
+		}
+		
+		for (Punto p: ListaCiudades)
+		{
+			
+			urlMapa +="&markers=color:red%7Clabel:Ciudad%7C"+p.getCoordX().toString()+","+p.getCoordY().toString();
+		}
+		
+		for (Punto p: ListaPlantacion)
+		{
+			
+			urlMapa +="&markers=color:yellow%7Clabel:Plantacion%7C"+p.getCoordX().toString()+","+p.getCoordY().toString();
+		}
+		
+		
+	
+		try {
+		  Desktop.getDesktop().browse(new URL(urlMapa).toURI());
+		  ret.resultado = Retorno.Resultado.OK;
+		} catch (Exception e) {
+		  e.printStackTrace();
+		}
 
 		return ret;
 	}
@@ -319,8 +354,36 @@ public class Sistema implements ISistema {
 	public Retorno listadoDePlantacionesEnCiudad(Double coordX, Double coordY) {
 		Retorno ret = new Retorno();
 
-		ret.resultado = Resultado.NO_IMPLEMENTADA;
+		String urlMapa = "";
 
+		Punto p = instancia.grafo.buscarPunto(coordX, coordY);
+		
+		
+		
+		CaminosMinimos caminos = instancia.grafo.buscarCaminosMinimosPlantacion(p, 20);
+		
+		 for (int i=0; i<caminos.getCostos().length; i++)
+		 {
+			
+			    try {
+			    	Punto p2 = instancia.getGrafo().getPuntos().getVectorHash()[i].getPunto();
+					 int[] indiceCostos = caminos.getCostos();
+					 int indice = indiceCostos[i];
+					 
+					 if (p2.getTipo().equals(TipoPunto.PLANTACION) && indice < 20)
+					 {
+						 urlMapa +=p2.getCoordX().toString()+";"+p2.getCoordY().toString()+"|";
+					 }
+			    } catch (Exception e)
+			    {
+			    	
+			    }
+			 	
+			
+		 }
+		
+		
+		
 		return ret;
 	}
 

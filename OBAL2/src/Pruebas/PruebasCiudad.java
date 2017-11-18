@@ -17,11 +17,10 @@ public class PruebasCiudad {
 		int n;
 		
 		// INICIO EL SISTEMA
-		System.out.println("INICIO EL SISTEMA");
+		
 		n = 6;
 		ret = sis.inicializarSistema(n);
-		System.out.println("INICIALIZACI�N: " + ret.resultado);
-		System.out.println("");
+		
 		
 		// REGISTRO una ciudad
 				ret = sis.registrarCiudad("CiudadA", 100.50, 100.50);
@@ -37,11 +36,10 @@ public class PruebasCiudad {
 		int n;
 		
 		// INICIO EL SISTEMA
-		System.out.println("INICIO EL SISTEMA");
+		
 		n = 6;
 		ret = sis.inicializarSistema(n);
-		System.out.println("INICIALIZACI�N: " + ret.resultado);
-		System.out.println("");
+		
 		
 		// REGISTRO una ciudad
 		ret = sis.registrarCiudad("CiudadA", 100.50, 100.50);
