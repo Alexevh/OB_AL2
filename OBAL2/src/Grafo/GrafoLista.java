@@ -1,5 +1,7 @@
 package Grafo;
 
+import java.awt.Desktop;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -353,20 +355,29 @@ public class GrafoLista {
 		for (Punto p: ListaSilos)
 		{
 			
-			urlMapa +="&markers=color:green|label:Silo|"+p.getCoordX().toString()+","+p.getCoordY().toString();
+			urlMapa +="&markers=color:green%7Clabel:Silo%7C"+p.getCoordX().toString()+","+p.getCoordY().toString();
 		}
 		
 		for (Punto p: ListaCiudades)
 		{
 			
-			urlMapa +="&markers=color:red|label:Ciudad|"+p.getCoordX().toString()+","+p.getCoordY().toString();
+			urlMapa +="&markers=color:red%7Clabel:Ciudad%7C"+p.getCoordX().toString()+","+p.getCoordY().toString();
 		}
 		
 		for (Punto p: ListaPlantacion)
 		{
 			
-			urlMapa +="&markers=color:yellow|label:Plantacion|"+p.getCoordX().toString()+","+p.getCoordY().toString();
+			urlMapa +="&markers=color:yellow%7Clabel:Plantacion%7C"+p.getCoordX().toString()+","+p.getCoordY().toString();
 		}
+		
+		
+	
+		try {
+		  Desktop.getDesktop().browse(new URL(urlMapa).toURI());
+		} catch (Exception e) {
+		  e.printStackTrace();
+		}
+		
 		
 		return urlMapa;
 		
