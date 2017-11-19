@@ -422,5 +422,34 @@ public class GrafoLista {
 		return urlMapa;
 	}
 	
+	
+	
+	
+	/*
+	public void buscarDFS2(Punto p) {
 
+        System.out.println(p.getNombre());
+        ListaAdy lista = this.listaAdyacencias[puntos.buscarIndice(p.getCoordX(), p.getCoordY())];
+        
+        /* Recorro la lista de nodos desde el inicio 
+        NodoListaAdy nodo = lista.inicio;
+        
+        while(nodo!=null)
+        {
+             Punto p2 = puntos.getPunto(nodo.destino);
+             
+              if (p2!=null && p2.isVisitado()==false)
+            {
+                buscarDFS2(p2);
+                p2.setVisitado(true);
+            }
+              
+              nodo= nodo.sig;
+        }
+        
+        
+      
+            
+        }
+    */
 }

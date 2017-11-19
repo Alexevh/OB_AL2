@@ -224,6 +224,9 @@ public class Sistema implements ISistema {
 		Retorno ret = new Retorno();
 		Punto puntoA = grafo.buscarPunto(coordXi, coordYi);
 		Punto puntoB = grafo.buscarPunto(coordXf, coordYf);
+		
+		
+		
 
 		if (puntoA == null) {
 			ret.resultado = Resultado.ERROR_1;
@@ -239,6 +242,8 @@ public class Sistema implements ISistema {
 			grafo.eliminarTramo(puntoA, puntoB, false);
 			ret.resultado = Resultado.OK;
 		}
+		
+		
 
 		return ret;
 	}
@@ -340,9 +345,19 @@ public class Sistema implements ISistema {
 		String urlMapa = "";
 
 		Punto p = instancia.grafo.buscarPunto(coordX, coordY);
-
-		CaminosMinimos caminos = instancia.grafo.buscarCaminosMinimosPlantacion(p, 20);
-
+		CaminosMinimos caminos;
+		
+		try {
+		 caminos = instancia.grafo.buscarCaminosMinimosPlantacion(p, 20);
+		} catch (Exception e)
+		{
+			/*Puede dar null, si es null tiramos error*/
+			ret.resultado = Resultado.ERROR_1;
+			return ret;
+		}
+			
+	
+		
 		for (int i = 0; i < caminos.getCostos().length; i++) {
 
 			try {

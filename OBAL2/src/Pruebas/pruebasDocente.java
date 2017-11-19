@@ -215,7 +215,10 @@ public class pruebasDocente {
 		
 		r = sis.listadoDeSilos();
 		assertEquals(Retorno.Resultado.OK, r.resultado);
-		assertEquals("", r.valorString);
+		assertEquals("32.11;33.11;400;400|42.11;43.11;500;500|52.11;53.11;600;600|12.11;13.11;200;200|22.11;23.11;300;300|", r.valorString);
+		
+		/*Este era el valor original de la prueba del docente, hacia un assert vacio a un resultado que era bueno*/
+		//assertEquals("", r.valorString);
 		
 	}
 
