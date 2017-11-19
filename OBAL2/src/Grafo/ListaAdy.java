@@ -20,6 +20,7 @@ public class ListaAdy {
 		}
 	}
 	
+	
 	public int getCantidad() {
 		return cantidad;
 	}

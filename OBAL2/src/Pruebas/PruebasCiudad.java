@@ -14,6 +14,7 @@ public class PruebasCiudad {
 		Sistema sis = Sistema.getInstancia();
 		int n;
 
+		
 		// INICIO EL SISTEMA
 
 		n = 6;

@@ -12,6 +12,7 @@ public class PruebaSilo {
 	public void agregarSilo() {
 
 		Retorno ret = new Retorno();
+		
 		Sistema sis = Sistema.getInstancia();
 		int n;
 

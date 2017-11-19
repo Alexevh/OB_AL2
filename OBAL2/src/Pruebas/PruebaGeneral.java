@@ -13,6 +13,7 @@ public class PruebaGeneral {
 		Retorno ret = new Retorno();
 		Sistema sis = Sistema.getInstancia();
 		int n = 6;
+		
 		sis.inicializarSistema(n);
 		
 		sis.registrarProductor("1.111.111-1", "elProductor", "calle", "mail@mail.com", "097222222");

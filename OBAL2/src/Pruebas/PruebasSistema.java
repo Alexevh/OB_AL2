@@ -14,6 +14,7 @@ public class PruebasSistema {
 		Sistema sis = Sistema.getInstancia();
 		boolean tengoSistema = sis != null;
 		Assert.assertEquals(true, tengoSistema);
+		
 	}
 
 	@Test

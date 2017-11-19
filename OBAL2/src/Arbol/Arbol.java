@@ -96,6 +96,7 @@ public class Arbol {
 	public void destruirArbol() {
 		if (raiz != null) {
 			destruir(this.raiz);
+			
 		}
 	}
 	

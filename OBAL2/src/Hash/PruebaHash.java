@@ -18,6 +18,7 @@ public class PruebaHash {
 		HT.agregar(p3);
 		HT.agregar(p4);
 		HT.agregar(p5);
+		
 
 		System.out.println(HT.getVectorHash()[0].estado);
 		System.out.println(HT.getVectorHash()[1].estado);

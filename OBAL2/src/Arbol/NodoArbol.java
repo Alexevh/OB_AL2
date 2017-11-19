@@ -11,6 +11,7 @@ public class NodoArbol {
 
 	private NodoArbol nodoDer;
 
+	
 	public Productor getDato() {
 		return dato;
 	}

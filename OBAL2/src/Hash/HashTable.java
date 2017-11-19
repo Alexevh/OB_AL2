@@ -13,6 +13,7 @@ public class HashTable {
 	public int getCant() {
 		return cant;
 	}
+	
 
 	public void setCant(int cant) {
 		this.cant = cant;

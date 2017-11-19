@@ -13,6 +13,7 @@ public class PruebasGrafo {
 	public void registrarTramo() {
 		Retorno ret = new Retorno();
 		Sistema sis = Sistema.getInstancia();
+		
 		int n;
 
 		// INICIO EL SISTEMA

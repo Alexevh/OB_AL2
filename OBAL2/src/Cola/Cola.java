@@ -72,5 +72,6 @@ public class Cola {
 	public int tamanoCola() {
 		return tamano;
 	}
+	
 
 }

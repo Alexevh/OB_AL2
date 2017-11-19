@@ -33,5 +33,6 @@ public class Silo extends Punto {
 			return capacidadRemanente;
 		}
 	}
+	
 
 }

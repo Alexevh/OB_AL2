@@ -5,7 +5,9 @@ import java.util.ArrayList;
 public class CaminosMinimos {
 
 	private int[] costos;
+	
 	private int[] predec;
+	
 	private int objetivo;
 
 	public void setObjetivo(int value) {

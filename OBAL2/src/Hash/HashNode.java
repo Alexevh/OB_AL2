@@ -21,6 +21,7 @@ public class HashNode {
 		}
 	}
 
+	
 	public HashNode(Punto punto) {
 		this.punto = punto;
 		if (punto == null) {

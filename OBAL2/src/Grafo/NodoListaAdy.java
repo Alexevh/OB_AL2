@@ -19,5 +19,6 @@ public class NodoListaAdy {
 		this.ant = null;
 		this.sig = null;
 	}
+	
 
 }

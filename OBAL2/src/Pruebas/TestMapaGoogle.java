@@ -23,6 +23,7 @@ public class TestMapaGoogle {
 		Retorno ret = new Retorno();
 		Sistema sis = Sistema.getInstancia();
 		int n;
+		
 
 		// INICIO EL SISTEMA
 
