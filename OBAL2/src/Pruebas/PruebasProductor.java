@@ -15,7 +15,7 @@ public class PruebasProductor {
 	{
 		
 		Productor p1 = new Productor("1.111111-1", "ProductorA", "DireccionA", "mailA@mail.com", "091234678");
-		Productor p2 = new Productor("2.222.222-2", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
+		Productor p2 = new Productor("2.222.222-2", "ElProductor2", "Calle123", "mail2@mail.com", "092222222");
 		
 		int recibido = p1.compareTo(p2);
 		int esperado = 1;
@@ -43,9 +43,9 @@ public class PruebasProductor {
 		
 		// REGISTRO DOS PRODUCTORES
 		
-		ret = sis.registrarProductor("1.111.111-1", "ElProductor1", "Direcci�nA", "mail1@mail.com", "091111111");
+		ret = sis.registrarProductor("1.111.111-1", "ElProductor1", "Calle123", "mail1@mail.com", "091111111");
 		
-		ret = sis.registrarProductor("2.222.222-2", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
+		ret = sis.registrarProductor("2.222.222-2", "ElProductor2", "Calle123", "mail2@mail.com", "092222222");
 		;
 		
 		Assert.assertEquals(Retorno.Resultado.OK, ret.resultado);
@@ -71,9 +71,8 @@ public class PruebasProductor {
 		
 		// REGISTRO DOS PRODUCTORES
 		
-		ret = sis.registrarProductor("1.111.111-1", "ElProductor1", "Direcci�nA", "mail1@mail.com", "091111111");
-	
-		ret = sis.registrarProductor("2.222.222-2", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
+		ret = sis.registrarProductor("1.111.111-1", "ElProductor1", "Calle123", "mail1@mail.com", "091111111");
+		ret = sis.registrarProductor("2.222.222-2", "ElProductor2", "Calle123", "mail2@mail.com", "092222222");
 		
 		
 		
@@ -101,18 +100,23 @@ public class PruebasProductor {
 		n = 6;
 		ret = sis.inicializarSistema(n);
 		
+		// REGISTRO PRODUCTORES
 		
-		/* Registro 2 productores */
+		sis.registrarProductor("4.444.444-4", "ElProductor4", "Calle123", "mail2@mail.com", "094444444");
+		sis.registrarProductor("8.888.888-8", "ElProductor8", "Calle123", "mail2@mail.com", "098888888");
+		sis.registrarProductor("1.111.111-1", "ElProductor1", "Calle123", "mail1@mail.com", "091111111");
+		sis.registrarProductor("2.222.222-2", "ElProductor2", "Calle123", "mail2@mail.com", "092222222");
+		sis.registrarProductor("5.555.555-5", "ElProductor5", "Calle123", "mail2@mail.com", "095555555");
+		sis.registrarProductor("6.666.666-6", "ElProductor6", "Calle123", "mail2@mail.com", "096666666");
+		sis.registrarProductor("7.777.777-7", "ElProductor7", "Calle123", "mail2@mail.com", "097777777");
+		sis.registrarProductor("3.333.333-3", "ElProductor3", "Calle123", "mail2@mail.com", "093333333");
 		
-		// REGISTRO DOS PRODUCTORES
+		ret = sis.listadoProductores();
 		
-		ret = sis.registrarProductor("1.111.111-1", "ElProductor1", "Direcci�nA", "mail1@mail.com", "091111111");
+		String esperado = "1.111.111-1;ElProductor1;091111111|2.222.222-2;ElProductor2;092222222|3.333.333-3;ElProductor3;093333333|4.444.444-4;ElProductor4;094444444|5.555.555-5;ElProductor5;095555555|6.666.666-6;ElProductor6;096666666|7.777.777-7;ElProductor7;097777777|8.888.888-8;ElProductor8;098888888|";
 		
-		ret = sis.registrarProductor("2.222.222-2", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
-		
-		
-		
-		sis.getProductoresArbol().listarAscendente();
+		Assert.assertEquals(Retorno.Resultado.OK, ret.resultado);
+		Assert.assertEquals(ret.valorString, esperado);
 		
 	}
 	
@@ -134,9 +138,9 @@ public class PruebasProductor {
 		
 		// REGISTRO DOS PRODUCTORES
 		
-		ret = sis.registrarProductor("1.111.111-1", "ElProductor1", "Direcci�nA", "mail1@mail.com", "091111111");
+		ret = sis.registrarProductor("1.111.111-1", "ElProductor1", "Calle123", "mail1@mail.com", "091111111");
 	
-		ret = sis.registrarProductor("1.111.111-1", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
+		ret = sis.registrarProductor("1.111.111-1", "ElProductor2", "Calle123", "mail2@mail.com", "092222222");
 	
 		
 		
@@ -159,19 +163,15 @@ public class PruebasProductor {
 		
 		/* Registro 2 productores */
 		
-		// REGISTRO DOS PRODUCTORES
-		ret = sis.registrarProductor("4.444.444-4", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
-		ret = sis.registrarProductor("8.888.888-8", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
-		
-		ret = sis.registrarProductor("1.111.111-1", "ElProductor1", "Direcci�nA", "mail1@mail.com", "091111111");
-		
-		ret = sis.registrarProductor("2.222.222-2", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
-		
-		
-		ret = sis.registrarProductor("5.555.555-5", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
-		ret = sis.registrarProductor("6.666.666-6", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
-		ret = sis.registrarProductor("7.777.777-7", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
-		ret = sis.registrarProductor("3.333.333-3", "ElProductor2", "Direcci�nA", "mail2@mail.com", "092222222");
+		// REGISTRO PRODUCTORES
+		ret = sis.registrarProductor("4.444.444-4", "ElProductor4", "Calle123", "mail2@mail.com", "094444444");
+		ret = sis.registrarProductor("8.888.888-8", "ElProductor8", "Calle123", "mail2@mail.com", "098888888");
+		ret = sis.registrarProductor("1.111.111-1", "ElProductor1", "Calle123", "mail1@mail.com", "091111111");
+		ret = sis.registrarProductor("2.222.222-2", "ElProductor2", "Calle123", "mail2@mail.com", "092222222");
+		ret = sis.registrarProductor("5.555.555-5", "ElProductor5", "Calle123", "mail2@mail.com", "095555555");
+		ret = sis.registrarProductor("6.666.666-6", "ElProductor6", "Calle123", "mail2@mail.com", "096666666");
+		ret = sis.registrarProductor("7.777.777-7", "ElProductor7", "Calle123", "mail2@mail.com", "097777777");
+		ret = sis.registrarProductor("3.333.333-3", "ElProductor3", "Calle123", "mail2@mail.com", "093333333");
 		
 	
 		

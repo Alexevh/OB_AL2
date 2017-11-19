@@ -48,12 +48,12 @@ public class HashTable {
 		this.cant = 0;
 		this.vectorHash = new HashNode[this.tamanio];
 		for (int i = 0; i < vectorHash.length; i++) {
-			vectorHash[i] = new HashNode(null,-1);
+			vectorHash[i] = new HashNode(null);
 		}
 	}
 
 	public void agregar(Punto p) {
-		if (cant != limite) {
+		if (cant < limite) {
 			int indCoord = getNombreInterno(p.getCoordX(), p.getCoordY());
 			int pos = indCoord;
 			int i = 1;
@@ -62,7 +62,7 @@ public class HashTable {
 				i++;
 			}
 			if (!this.vectorHash[pos].estado.equals(Estado.OCUPADO)) {
-				this.vectorHash[pos] = new HashNode(p, pos);
+				this.vectorHash[pos].setPunto(p);
 				this.cant++;
 			}
 		}
@@ -75,13 +75,14 @@ public class HashTable {
 		Punto p = new Punto(cX, cY);
 		int i = 1;
 
-		while (((this.vectorHash[pos].estado.equals(Estado.OCUPADO) && !this.vectorHash[pos].getPunto().equals(p)) || this.vectorHash[pos].estado.equals(Estado.SUPRIMIDO)) && i <= tamanio) {
+		while (((this.vectorHash[pos].estado.equals(Estado.OCUPADO) && !this.vectorHash[pos].getPunto().equals(p))
+				|| this.vectorHash[pos].estado.equals(Estado.SUPRIMIDO)) && i <= tamanio) {
 			pos = (indCoord + i) % tamanio;
 			i++;
 		}
 
 		if (this.vectorHash[pos].estado.equals(Estado.OCUPADO) && this.vectorHash[pos].getPunto().equals(p)) {
-			this.vectorHash[pos] = new HashNode(null,-1,Estado.SUPRIMIDO);
+			this.vectorHash[pos] = new HashNode(null, -1, Estado.SUPRIMIDO);
 			this.cant--;
 			return pos;
 		} else {
@@ -94,7 +95,8 @@ public class HashTable {
 		int pos = indCoord;
 		Punto p = new Punto(cX, cY);
 		int i = 1;
-		while (((this.vectorHash[pos].estado.equals(Estado.OCUPADO) && !this.vectorHash[pos].getPunto().equals(p)) || this.vectorHash[pos].estado.equals(Estado.SUPRIMIDO)) && i <= tamanio) {
+		while (((this.vectorHash[pos].estado.equals(Estado.OCUPADO) && !this.vectorHash[pos].getPunto().equals(p))
+				|| this.vectorHash[pos].estado.equals(Estado.SUPRIMIDO)) && i <= tamanio) {
 			pos = (indCoord + i) % tamanio;
 			i++;
 		}
@@ -102,6 +104,23 @@ public class HashTable {
 			return pos;
 		} else {
 			return -1;
+		}
+	}
+
+	public Punto buscarPunto(Double cX, Double cY) {
+		int i = buscarIndice(cX, cY);
+		if (i == -1) {
+			return null;
+		} else {
+			return this.vectorHash[i].getPunto();
+		}
+	}
+
+	public Punto getPunto(int i) {
+		if (i >= 0 && i < tamanio) {
+			return vectorHash[i].getPunto();
+		} else {
+			return null;
 		}
 	}
 
@@ -127,6 +146,5 @@ public class HashTable {
 				return false;
 		return true;
 	}
-	
 
 }

@@ -16,8 +16,6 @@ import Utiles.Utilidades;
 
 public class Sistema implements ISistema {
 
-	private ArrayList<Productor> productores;
-	
 	private Arbol productoresArbol;
 
 	private GrafoLista grafo;
@@ -35,16 +33,15 @@ public class Sistema implements ISistema {
 	}
 
 	public Productor buscarProductor(String cedula_productor) {
-		
+
 		Productor p;
 		try {
 			p = this.productoresArbol.buscarPorCedula(cedula_productor).getDato();
-			
-		} catch (Exception e)
-		{
+
+		} catch (Exception e) {
 			return null;
 		}
-		
+
 		return p;
 	}
 
@@ -55,16 +52,6 @@ public class Sistema implements ISistema {
 	/* Para probar Caminos M�nimos. ELIMINAR PARA LA ENTREGA */
 	public GrafoLista getGrafo() {
 		return grafo;
-	}
-
-	
-	
-	public ArrayList<Productor> getProductores() {
-		return productores;
-	}
-
-	public void setProductores(ArrayList<Productor> productores) {
-		this.productores = productores;
 	}
 
 	public Arbol getProductoresArbol() {
@@ -92,7 +79,6 @@ public class Sistema implements ISistema {
 		} else {
 			instancia = getInstancia();
 			instancia.grafo = new GrafoLista(cantPuntos);
-			instancia.productores = new ArrayList();
 			instancia.productoresArbol = new Arbol();
 			ret.resultado = Resultado.OK;
 		}
@@ -105,7 +91,9 @@ public class Sistema implements ISistema {
 		Retorno ret = new Retorno();
 
 		instancia.grafo.destruir();
-		instancia.productores.clear();
+		instancia.grafo = null;
+		instancia.productoresArbol.destruirArbol();
+		instancia.productoresArbol = null;
 		ret.resultado = Resultado.OK;
 
 		return ret;
@@ -276,37 +264,34 @@ public class Sistema implements ISistema {
 		Retorno ret = new Retorno();
 
 		String urlMapa = "http://maps.googleapis.com/maps/api/staticmap?center=Durazno,Uruguay&zoom=7&size=2400x1200&maptype=roadmap&";
-		
-		
+
 		ArrayList<Punto> ListaSilos = instancia.grafo.buscarPuntosPorTipo(Sistema.TipoPunto.SILO);
 		ArrayList<Punto> ListaCiudades = instancia.grafo.buscarPuntosPorTipo(Sistema.TipoPunto.CIUDAD);
 		ArrayList<Punto> ListaPlantacion = instancia.grafo.buscarPuntosPorTipo(Sistema.TipoPunto.PLANTACION);
-		
-		for (Punto p: ListaSilos)
-		{
-			
-			urlMapa +="&markers=color:green%7Clabel:Silo%7C"+p.getCoordX().toString()+","+p.getCoordY().toString();
+
+		for (Punto p : ListaSilos) {
+
+			urlMapa += "&markers=color:green%7Clabel:Silo%7C" + p.getCoordX().toString() + ","
+					+ p.getCoordY().toString();
 		}
-		
-		for (Punto p: ListaCiudades)
-		{
-			
-			urlMapa +="&markers=color:red%7Clabel:Ciudad%7C"+p.getCoordX().toString()+","+p.getCoordY().toString();
+
+		for (Punto p : ListaCiudades) {
+
+			urlMapa += "&markers=color:red%7Clabel:Ciudad%7C" + p.getCoordX().toString() + ","
+					+ p.getCoordY().toString();
 		}
-		
-		for (Punto p: ListaPlantacion)
-		{
-			
-			urlMapa +="&markers=color:yellow%7Clabel:Plantacion%7C"+p.getCoordX().toString()+","+p.getCoordY().toString();
+
+		for (Punto p : ListaPlantacion) {
+
+			urlMapa += "&markers=color:yellow%7Clabel:Plantacion%7C" + p.getCoordX().toString() + ","
+					+ p.getCoordY().toString();
 		}
-		
-		
-	
+
 		try {
-		  Desktop.getDesktop().browse(new URL(urlMapa).toURI());
-		  ret.resultado = Retorno.Resultado.OK;
+			Desktop.getDesktop().browse(new URL(urlMapa).toURI());
+			ret.resultado = Retorno.Resultado.OK;
 		} catch (Exception e) {
-		  e.printStackTrace();
+			e.printStackTrace();
 		}
 
 		return ret;
@@ -324,16 +309,15 @@ public class Sistema implements ISistema {
 		} else {
 			Plantacion plantacion = (Plantacion) punto;
 			int capacidadRequerida = plantacion.getCapacidad();
-			;
-			CaminosMinimos caminos = grafo.buscarCaminosMinimos(plantacion, capacidadRequerida);
 
+			CaminosMinimos caminos = grafo.buscarCaminosMinimos(plantacion, capacidadRequerida);
 			if (caminos.getObjetivo() == -1) {
 				ret.resultado = Resultado.ERROR_2;
 				ret.valorString = "Error: no exite un silo que pueda en este momento contener la capacidad requerida.";
 			} else {
 				Silo silo = (Silo) grafo.buscarPunto(caminos.getObjetivo());
-				silo.reservar(capacidadRequerida);
 
+				silo.reservar(capacidadRequerida);
 				ArrayList<Integer> resInverso = caminos.resultadoOrdenadoInverso();
 				String resString = "";
 				Punto p;
@@ -357,33 +341,25 @@ public class Sistema implements ISistema {
 		String urlMapa = "";
 
 		Punto p = instancia.grafo.buscarPunto(coordX, coordY);
-		
-		
-		
+
 		CaminosMinimos caminos = instancia.grafo.buscarCaminosMinimosPlantacion(p, 20);
-		
-		 for (int i=0; i<caminos.getCostos().length; i++)
-		 {
-			
-			    try {
-			    	Punto p2 = instancia.getGrafo().getPuntos().getVectorHash()[i].getPunto();
-					 int[] indiceCostos = caminos.getCostos();
-					 int indice = indiceCostos[i];
-					 
-					 if (p2.getTipo().equals(TipoPunto.PLANTACION) && indice < 20)
-					 {
-						 urlMapa +=p2.getCoordX().toString()+";"+p2.getCoordY().toString()+"|";
-					 }
-			    } catch (Exception e)
-			    {
-			    	
-			    }
-			 	
-			
-		 }
-		
-		
-		
+
+		for (int i = 0; i < caminos.getCostos().length; i++) {
+
+			try {
+				Punto p2 = instancia.getGrafo().getPuntos().getVectorHash()[i].getPunto();
+				int[] indiceCostos = caminos.getCostos();
+				int indice = indiceCostos[i];
+
+				if (p2.getTipo().equals(TipoPunto.PLANTACION) && indice < 20) {
+					urlMapa += p2.getCoordX().toString() + ";" + p2.getCoordY().toString() + "|";
+				}
+			} catch (Exception e) {
+
+			}
+
+		}
+
 		return ret;
 	}
 
@@ -408,10 +384,8 @@ public class Sistema implements ISistema {
 	@Override
 	public Retorno listadoProductores() {
 		Retorno ret = new Retorno();
-		String listado = "";
-		for (Productor p : productores) {
-			listado += p.getCedula() + ";" + p.getNombre() + ";" + p.getCelular() + "|";
-		}
+
+		String listado = productoresArbol.listarAscendente();
 
 		ret.valorString = listado;
 		ret.resultado = Resultado.OK;

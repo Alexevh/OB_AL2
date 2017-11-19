@@ -5,41 +5,38 @@ import Dominio.Punto;
 
 public class NodoArbol {
 
-	 	private Productor dato;
-	    
-	    private NodoArbol nodoIzq;
-	    
-	    private NodoArbol nodoDer;
+	private Productor dato;
 
-		public Productor getDato() {
-			return dato;
-		}
+	private NodoArbol nodoIzq;
 
-		public void setDato(Productor dato) {
-			this.dato = dato;
-		}
+	private NodoArbol nodoDer;
 
-		public NodoArbol getNodoIzq() {
-			return nodoIzq;
-		}
+	public Productor getDato() {
+		return dato;
+	}
 
-		public void setNodoIzq(NodoArbol nodoIzq) {
-			this.nodoIzq = nodoIzq;
-		}
+	public void setDato(Productor dato) {
+		this.dato = dato;
+	}
 
-		public NodoArbol getNodoDer() {
-			return nodoDer;
-		}
+	public NodoArbol getNodoIzq() {
+		return nodoIzq;
+	}
 
-		public void setNodoDer(NodoArbol nodoDer) {
-			this.nodoDer = nodoDer;
-		}
-	    
-	    
-		public NodoArbol(Productor x)
-	    {
-	        this.dato =x;
-	    }
-	    
-	
+	public void setNodoIzq(NodoArbol nodoIzq) {
+		this.nodoIzq = nodoIzq;
+	}
+
+	public NodoArbol getNodoDer() {
+		return nodoDer;
+	}
+
+	public void setNodoDer(NodoArbol nodoDer) {
+		this.nodoDer = nodoDer;
+	}
+
+	public NodoArbol(Productor x) {
+		this.dato = x;
+	}
+
 }
