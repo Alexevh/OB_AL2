@@ -29,8 +29,7 @@ public class Sistema implements ISistema {
 		return instancia;
 	}
 
-	private Sistema() {
-	}
+
 
 	public Productor buscarProductor(String cedula_productor) {
 
@@ -337,7 +336,7 @@ public class Sistema implements ISistema {
 	@Override
 	public Retorno listadoDePlantacionesEnCiudad(Double coordX, Double coordY) {
 		Retorno ret = new Retorno();
-
+       
 		String urlMapa = "";
 
 		Punto p = instancia.grafo.buscarPunto(coordX, coordY);
@@ -353,13 +352,17 @@ public class Sistema implements ISistema {
 
 				if (p2.getTipo().equals(TipoPunto.PLANTACION) && indice < 20) {
 					urlMapa += p2.getCoordX().toString() + ";" + p2.getCoordY().toString() + "|";
+				
 				}
+				
+				ret.resultado = Resultado.OK;
 			} catch (Exception e) {
-
+				ret.resultado = Resultado.ERROR_1;
 			}
 
 		}
 
+	
 		return ret;
 	}
 

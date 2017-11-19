@@ -168,15 +168,16 @@ public class GrafoLista {
 	}
 
 	public CaminosMinimos buscarCaminosMinimosCiudad(int origen, int km) {
-		boolean[] visitados = new boolean[cantidadMaxima];
-		int[] costos = new int[cantidadMaxima];
-		int[] predec = new int[cantidadMaxima];
+		int maxPuntos = puntos.getTamanio();
+		boolean[] visitados = new boolean[maxPuntos];
+		int[] costos = new int[maxPuntos];
+		int[] predec = new int[maxPuntos];
 		predec[origen] = -1;
 		costos[origen] = 0;
 		visitados[origen] = true;
 		ArrayList<Integer> objetivos = new ArrayList<Integer>();
 
-		for (int i = 0; i < cantidadMaxima; i++) {
+		for (int i = 0; i < maxPuntos; i++) {
 			if (i != origen) {
 				if (sonAdyacentes(origen, i)) {
 					costos[i] = buscarTramo(origen, i);
@@ -188,7 +189,7 @@ public class GrafoLista {
 		}
 
 		int objetivo = -1;
-		for (int k = 0; k < cantidadMaxima; k++) {
+		for (int k = 0; k < maxPuntos; k++) {
 			int v = buscarPuntoSinVisitarConCostoMinimo(costos, visitados);
 			if (v >= 0) {
 				visitados[v] = true;
