@@ -181,7 +181,7 @@ public class pruebasDocente {
 		
 		r = sis.rutaASiloMasCercano(-32.702193,-57.638238);
 		assertEquals(Retorno.Resultado.OK, r.resultado);
-		assertEquals("-32.702193;-57.638238|-32.364862;-54.166551|-34.901113;-56.164531|-34.460719;-57.833910", r.valorString);
+		assertEquals("-32.702193;-57.638238|-34.164144;-58.034204|", r.valorString);
 		
 	}
 
@@ -196,6 +196,7 @@ public class pruebasDocente {
 		registrarPuntos();
 		
 		r = sis.listadoDePlantacionesEnCiudad(-32.364862,-54.166551);
+		System.out.println(r.valorString);
 		assertEquals(Retorno.Resultado.OK, r.resultado);
 		assertTrue(r.valorString.contains("-34.901113;-56.164531"));
 		assertTrue(r.valorString.contains("-32.702193;-57.638238"));

@@ -29,8 +29,6 @@ public class Sistema implements ISistema {
 		return instancia;
 	}
 
-
-
 	public Productor buscarProductor(String cedula_productor) {
 
 		Productor p;
@@ -224,9 +222,6 @@ public class Sistema implements ISistema {
 		Retorno ret = new Retorno();
 		Punto puntoA = grafo.buscarPunto(coordXi, coordYi);
 		Punto puntoB = grafo.buscarPunto(coordXf, coordYf);
-		
-		
-		
 
 		if (puntoA == null) {
 			ret.resultado = Resultado.ERROR_1;
@@ -242,8 +237,6 @@ public class Sistema implements ISistema {
 			grafo.eliminarTramo(puntoA, puntoB, false);
 			ret.resultado = Resultado.OK;
 		}
-		
-		
 
 		return ret;
 	}
@@ -341,43 +334,36 @@ public class Sistema implements ISistema {
 	@Override
 	public Retorno listadoDePlantacionesEnCiudad(Double coordX, Double coordY) {
 		Retorno ret = new Retorno();
-       
-		String urlMapa = "";
 
-		Punto p = instancia.grafo.buscarPunto(coordX, coordY);
-		CaminosMinimos caminos;
-		
-		try {
-		 caminos = instancia.grafo.buscarCaminosMinimosPlantacion(p, 20);
-		} catch (Exception e)
-		{
-			/*Puede dar null, si es null tiramos error*/
+		Punto punto = grafo.buscarPunto(coordX, coordY);
+
+		if (punto == null) {
 			ret.resultado = Resultado.ERROR_1;
-			return ret;
-		}
-			
-	
-		
-		for (int i = 0; i < caminos.getCostos().length; i++) {
+			ret.valorString = "Error: el punto de coordenadas " + coordX + " y " + coordY + " no existe.";
+		} else {
+			String urlMapa = "";
 
-			try {
+			Punto p = instancia.grafo.buscarPunto(coordX, coordY);
+			CaminosMinimos caminos = instancia.grafo.buscarCaminosMinimosPlantacion(p, 20);
+
+			for (int i = 0; i < caminos.getCostos().length; i++) {
+
 				Punto p2 = instancia.getGrafo().getPuntos().getVectorHash()[i].getPunto();
 				int[] indiceCostos = caminos.getCostos();
 				int indice = indiceCostos[i];
 
 				if (p2.getTipo().equals(TipoPunto.PLANTACION) && indice < 20) {
 					urlMapa += p2.getCoordX().toString() + ";" + p2.getCoordY().toString() + "|";
-				
+
 				}
-				
+
 				ret.resultado = Resultado.OK;
-			} catch (Exception e) {
-				ret.resultado = Resultado.ERROR_1;
+				ret.valorString = urlMapa;
+
 			}
 
 		}
 
-	
 		return ret;
 	}
 
@@ -410,6 +396,5 @@ public class Sistema implements ISistema {
 
 		return ret;
 	}
-	
 
 }
