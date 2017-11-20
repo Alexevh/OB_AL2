@@ -172,10 +172,14 @@ public class GrafoLista {
 		boolean[] visitados = new boolean[maxPuntos];
 		int[] costos = new int[maxPuntos];
 		int[] predec = new int[maxPuntos];
+		for (int i = 0; i < maxPuntos; i++) {
+			costos[i] = Integer.MAX_VALUE;
+		}
+		
 		predec[origen] = -1;
 		costos[origen] = 0;
 		visitados[origen] = true;
-		ArrayList<Integer> objetivos = new ArrayList<Integer>();
+		ArrayList<Integer> objetivos = new ArrayList();
 
 		for (int i = 0; i < maxPuntos; i++) {
 			if (i != origen) {
@@ -193,13 +197,6 @@ public class GrafoLista {
 			int v = buscarPuntoSinVisitarConCostoMinimo(costos, visitados);
 			if (v >= 0) {
 				visitados[v] = true;
-
-				if (puntos.getVectorHash()[v].getPunto().getTipo().equals(TipoPunto.PLANTACION)) {
-					objetivo = v;
-					objetivos.add(v);
-					// break;
-
-				}
 				/*
 				 * No entra a este bucle, cuando entre le ponemos que valide menos de KM de
 				 * distancia
@@ -207,17 +204,22 @@ public class GrafoLista {
 				NodoListaAdy w = listaAdyacencias[v].inicio;
 
 				while (w != null) {
-					if (!visitados[w.destino] && w.peso + costos[v] < km) {
+					if (!visitados[w.destino] && w.peso + costos[v] < costos[w.destino]) {
 						costos[w.destino] = costos[v] + w.peso;
 						predec[w.destino] = v;
+						
+						if (puntos.getPunto(w.destino).getTipo().equals(TipoPunto.PLANTACION) && costos[v]+w.peso <= 20 ) {
+							objetivos.add(w.destino);
+						}
 					}
+					
 					w = w.sig;
 				}
 			}
 		}
 
 		CaminosMinimos caminos = new CaminosMinimos(costos, predec);
-		caminos.setObjetivo(objetivo);
+		caminos.setObjetivos(objetivos);
 		return caminos;
 	}
 

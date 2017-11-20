@@ -341,27 +341,19 @@ public class Sistema implements ISistema {
 			ret.resultado = Resultado.ERROR_1;
 			ret.valorString = "Error: el punto de coordenadas " + coordX + " y " + coordY + " no existe.";
 		} else {
-			String urlMapa = "";
+			Punto ciudad = instancia.grafo.buscarPunto(coordX, coordY);
+			CaminosMinimos caminos = instancia.grafo.buscarCaminosMinimosPlantacion(ciudad, 20);
 
-			Punto p = instancia.grafo.buscarPunto(coordX, coordY);
-			CaminosMinimos caminos = instancia.grafo.buscarCaminosMinimosPlantacion(p, 20);
-
-			for (int i = 0; i < caminos.getCostos().length; i++) {
-
-				Punto p2 = instancia.getGrafo().getPuntos().getVectorHash()[i].getPunto();
-				int[] indiceCostos = caminos.getCostos();
-				int indice = indiceCostos[i];
-
-				if (p2.getTipo().equals(TipoPunto.PLANTACION) && indice < 20) {
-					urlMapa += p2.getCoordX().toString() + ";" + p2.getCoordY().toString() + "|";
-
-				}
-
-				ret.resultado = Resultado.OK;
-				ret.valorString = urlMapa;
-
+			String resString = "";
+			Punto p;
+			
+			for (int i = 0; i < objetivos.size(); i++) {
+				
+				p = grafo.buscarPunto(objetivos.get(i));
+				resString = p.getCoordX() + ";" + p.getCoordY() + "|" + resString;
 			}
-
+				ret.resultado = Resultado.OK;
+				ret.valorString = resString;
 		}
 
 		return ret;

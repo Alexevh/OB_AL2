@@ -181,7 +181,7 @@ public class pruebasDocente {
 		
 		r = sis.rutaASiloMasCercano(-32.702193,-57.638238);
 		assertEquals(Retorno.Resultado.OK, r.resultado);
-		assertEquals("-32.702193;-57.638238|-34.164144;-58.034204|", r.valorString);
+		assertEquals("-32.702193;-57.638238|-34.164144;-58.034204|-34.901113;-56.164531|-34.460719;-57.833910", r.valorString);
 		
 	}
 
