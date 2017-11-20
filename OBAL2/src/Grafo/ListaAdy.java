@@ -87,6 +87,10 @@ public class ListaAdy {
 
 			if (nodo != null) {
 				unir(nodo.ant, nodo.sig);
+				if (nodo.destino==d)
+				{
+					inicio=nodo.sig;
+				}
 				nodo = null;
 				cantidad--;
 			}
