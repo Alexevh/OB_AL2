@@ -92,7 +92,7 @@ public class GrafoLista {
 	/* Eliminar un vertice */
 	public void eliminarPunto(Punto punto) {
 		int i = puntos.buscarIndice(punto.getCoordX(), punto.getCoordY());
-		if (puntos.getVectorHash()[i] != null) {
+		if (i == -1) {
 			listaAdyacencias[i].destruir();
 			listaAdyacencias[i] = new ListaAdy();
 			puntos.eliminar(punto.getCoordX(), punto.getCoordY());
@@ -107,6 +107,7 @@ public class GrafoLista {
 	public void destruir() {
 		for (int i = 0; i < puntos.getTamanio(); i++) {
 			listaAdyacencias[i].destruir();
+			//Recorro el HASH entero
 			puntos.getVectorHash()[i] = null;
 		}
 		cantidadActual = 0;
@@ -119,8 +120,8 @@ public class GrafoLista {
 	}
 
 	public Punto buscarPunto(int indice) {
-		if (indice >= 0 && indice < puntos.getVectorHash().length) {
-			return puntos.getVectorHash()[indice].getPunto();
+		if (indice >= 0 && indice < puntos.getTamanio()) {
+			return puntos.getPunto(indice);
 		}
 		return null;
 	}
@@ -142,10 +143,11 @@ public class GrafoLista {
 	public ArrayList<Punto> buscarPuntosPorTipo(Sistema.TipoPunto tipo) {
 		ArrayList<Punto> puntosFiltrados = new ArrayList<Punto>();
 
-		for (int i = 0; i < puntos.getVectorHash().length; i++) {
+		for (int i = 0; i < puntos.getTamanio(); i++) {
 			try {
-				if (puntos.getVectorHash()[i].getPunto().getTipo().equals(tipo)) {
-					puntosFiltrados.add(puntos.getVectorHash()[i].getPunto());
+				Punto p = this.buscarPunto(i);
+				if (p.getTipo().equals(tipo)) {
+					puntosFiltrados.add(p);
 				}
 			} catch (Exception e) {
 
@@ -375,62 +377,6 @@ public class GrafoLista {
 
 	}
 
-	public String listadoDePlantacionesEnCiudad(Double coordX, Double CoordY) {
-
-		String urlMapa = "";
-
-		Punto p = buscarPunto(coordX, CoordY);
-
-		CaminosMinimos caminos = buscarCaminosMinimosPlantacion(p, 20);
-
-		for (int i = 0; i < caminos.getCostos().length; i++) {
-
-			try {
-				Punto p2 = puntos.getVectorHash()[i].getPunto();
-				int[] indiceCostos = caminos.getCostos();
-				int indice = indiceCostos[i];
-
-				if (p2.getTipo().equals(TipoPunto.PLANTACION) && indice < 20) {
-					urlMapa += p2.getCoordX().toString() + ";" + p2.getCoordY().toString() + "|";
-				}
-			} catch (Exception e) {
-
-			}
-
-		}
-		return urlMapa;
-	}
-
-	public String mapaDePlantacionesEnCiudad(Double coordX, Double CoordY) {
-
-		String urlMapa = "http://maps.googleapis.com/maps/api/staticmap?center=Durazno,Uruguay&zoom=7&size=2400x1200&maptype=roadmap&";
-
-		Punto p = buscarPunto(coordX, CoordY);
-
-		/* Marco en el mapa la ciudad */
-		urlMapa += "&markers=color:red|label:Ciudad|" + p.getCoordX().toString() + "," + p.getCoordY().toString();
-
-		CaminosMinimos caminos = buscarCaminosMinimosPlantacion(p, 20);
-
-		for (int i = 0; i < caminos.getCostos().length; i++) {
-
-			Punto p2 = puntos.getVectorHash()[i].getPunto();
-			int[] indiceCostos = caminos.getCostos();
-			int indice = indiceCostos[i];
-
-			if (p2.getTipo().equals(TipoPunto.PLANTACION) && indice < 20) {
-				urlMapa += "&markers=color:yellow|label:Plantacion|" + p2.getCoordX().toString() + ","
-						+ p2.getCoordY().toString();
-			}
-
-		}
-
-		return urlMapa;
-	}
-	
-	
-	
-	
 	/*
 	public void buscarDFS2(Punto p) {
 

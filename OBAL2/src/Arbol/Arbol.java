@@ -1,12 +1,13 @@
 package Arbol;
 
+import java.util.ArrayList;
+
 import Dominio.Productor;
 import Dominio.Punto;
 
 public class Arbol {
 
 	private NodoArbol raiz;
-	private String listaAux = "";
 
 	public NodoArbol getRaiz() {
 		return raiz;
@@ -73,22 +74,23 @@ public class Arbol {
 	}
 
 	/* Listar Ascendente -In order - */
-	public String listarAscendente() {
+	public ArrayList<String> listarAscendente() {
 		if (this.esVacio()) {
-			return "No hay productores";
+			return null;
 		} else {
-			listarAscendente(this.raiz);
-			return listaAux;
+			ArrayList<String> lista = new ArrayList();
+			listarAscendente(this.raiz,lista);
+			
+			return lista;
 		}
 	}
 
 	/* Recursiva para listar ascendente */
-	private void listarAscendente(NodoArbol n) {
+	private void listarAscendente(NodoArbol n,ArrayList<String> listaAux) {
 		if (n != null) {
-			listarAscendente(n.getNodoIzq());
-			listaAux += n.getDato().getCedula() + ";" + n.getDato().getNombre() + ";" + n.getDato().getCelular() + "|";
-			listarAscendente(n.getNodoDer());
-
+			listarAscendente(n.getNodoIzq(),listaAux);
+			listaAux.add(n.getDato().getCedula() + ";" + n.getDato().getNombre() + ";" + n.getDato().getCelular() + "|");
+			listarAscendente(n.getNodoDer(),listaAux);
 		}
 	}
 	

@@ -381,9 +381,12 @@ public class Sistema implements ISistema {
 	public Retorno listadoProductores() {
 		Retorno ret = new Retorno();
 
-		String listado = productoresArbol.listarAscendente();
-
-		ret.valorString = listado;
+		ArrayList<String> listado = productoresArbol.listarAscendente();
+		String lista = "";
+		for(String s:listado) {
+			lista += s;
+		}
+		ret.valorString = lista;
 		ret.resultado = Resultado.OK;
 
 		return ret;

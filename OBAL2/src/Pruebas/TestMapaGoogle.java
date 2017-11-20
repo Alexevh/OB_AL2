@@ -105,7 +105,8 @@ public class TestMapaGoogle {
 
 		ret = sis.registrarTramo(-31.50, -57.30, -34.58, -56.50, 25);
 
-		String mapa = sis.getGrafo().listadoDePlantacionesEnCiudad(-31.50, -57.30);
+		ret = sis.listadoDePlantacionesEnCiudad(-31.50, -57.30);
+		String mapa = ret.valorString;
 		System.out.println(mapa);
 
 	}
