@@ -181,8 +181,9 @@ public class pruebasDocente {
 		
 		r = sis.rutaASiloMasCercano(-32.702193,-57.638238);
 		assertEquals(Retorno.Resultado.OK, r.resultado);
-		assertEquals("-32.702193;-57.638238|-34.164144;-58.034204|", r.valorString);
-		
+		System.out.println(r.valorString);
+		assertEquals("-32.702193;-57.638238|-32.364862;-54.166551|-34.901113;-56.164531|-33.725648;-56.329281|", r.valorString);
+	
 	}
 
 	@Test

@@ -262,6 +262,7 @@ public class GrafoLista {
 
 				if (puntos.getPunto(v).esSiloConCapacidad(capacidadRequerida)) {
 					objetivo = v;
+					break;
 				}
 				NodoListaAdy w = listaAdyacencias[v].inicio;
 
