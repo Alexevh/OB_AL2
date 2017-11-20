@@ -343,14 +343,14 @@ public class Sistema implements ISistema {
 		} else {
 			Punto ciudad = instancia.grafo.buscarPunto(coordX, coordY);
 			CaminosMinimos caminos = instancia.grafo.buscarCaminosMinimosPlantacion(ciudad, 20);
-
+			ArrayList<Integer> objetivos = caminos.getObjetivos();
 			String resString = "";
 			Punto p;
 			
 			for (int i = 0; i < objetivos.size(); i++) {
 				
 				p = grafo.buscarPunto(objetivos.get(i));
-				resString = p.getCoordX() + ";" + p.getCoordY() + "|" + resString;
+				resString += p.getCoordX() + ";" + p.getCoordY() + "|";
 			}
 				ret.resultado = Resultado.OK;
 				ret.valorString = resString;

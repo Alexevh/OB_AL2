@@ -181,8 +181,7 @@ public class pruebasDocente {
 		
 		r = sis.rutaASiloMasCercano(-32.702193,-57.638238);
 		assertEquals(Retorno.Resultado.OK, r.resultado);
-		assertEquals("-32.702193;-57.638238|-34.164144;-58.034204|-34.901113;-56.164531|-34.460719;-57.833910", r.valorString);
-		
+		assertEquals("-32.702193;-57.638238|-32.364862;-54.166551|-34.901113;-56.164531|-33.725648;-56.329281|", r.valorString);
 	}
 
 	@Test
@@ -196,12 +195,11 @@ public class pruebasDocente {
 		registrarPuntos();
 		
 		r = sis.listadoDePlantacionesEnCiudad(-32.364862,-54.166551);
-		System.out.println(r.valorString);
 		assertEquals(Retorno.Resultado.OK, r.resultado);
 		assertTrue(r.valorString.contains("-34.901113;-56.164531"));
 		assertTrue(r.valorString.contains("-32.702193;-57.638238"));
 		assertTrue(r.valorString.contains("-34.336668;-53.793882"));
-		assertTrue(r.valorString.length()==65); // Solo tengo 3 plantaciones -> 21 * 3 + 2 pipes
+		assertTrue(r.valorString.length()==66); // Solo tengo 3 plantaciones -> 21 * 3 + 3 pipes
 	}
 
 	@Test

@@ -196,25 +196,28 @@ public class GrafoLista {
 		for (int k = 0; k < maxPuntos; k++) {
 			int v = buscarPuntoSinVisitarConCostoMinimo(costos, visitados);
 			if (v >= 0) {
-				visitados[v] = true;
-				/*
-				 * No entra a este bucle, cuando entre le ponemos que valide menos de KM de
-				 * distancia
-				 */
-				NodoListaAdy w = listaAdyacencias[v].inicio;
-
-				while (w != null) {
-					if (!visitados[w.destino] && w.peso + costos[v] < costos[w.destino]) {
-						costos[w.destino] = costos[v] + w.peso;
-						predec[w.destino] = v;
-						
-						if (puntos.getPunto(w.destino).getTipo().equals(TipoPunto.PLANTACION) && costos[v]+w.peso <= 20 ) {
-							objetivos.add(w.destino);
-						}
+				if(costos[v] <= km) {
+					visitados[v] = true;
+					/*
+					 * No entra a este bucle, cuando entre le ponemos que valide menos de KM de
+					 * distancia
+					 */
+					Punto p = this.buscarPunto(v);
+					if(p.getTipo().equals(TipoPunto.PLANTACION)) {
+						objetivos.add(v);
 					}
-					
-					w = w.sig;
+					NodoListaAdy w = listaAdyacencias[v].inicio;
+					while (w != null) {
+						if (!visitados[w.destino] && w.peso + costos[v] < costos[w.destino]) {
+							costos[w.destino] = costos[v] + w.peso;
+							predec[w.destino] = v;
+						}
+						w = w.sig;
+					}
+				}else {
+					break;
 				}
+				
 			}
 		}
 
@@ -264,6 +267,7 @@ public class GrafoLista {
 
 				if (puntos.getPunto(v).esSiloConCapacidad(capacidadRequerida)) {
 					objetivo = v;
+					break;
 				}
 				NodoListaAdy w = listaAdyacencias[v].inicio;
 
