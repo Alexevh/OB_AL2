@@ -106,9 +106,9 @@ public class TestMapaGoogle {
 		sis.registrarTramo(-31.50, -57.30, -34.58, -56.50, 25);
 
 		ret = sis.listadoDePlantacionesEnCiudad(-31.50, -57.30);
-		String mapa = ret.valorString;
-		System.out.println(mapa);
-
+		
+		
+		assertEquals(Retorno.Resultado.OK, ret.resultado);
 	}
 	
 	@Test
@@ -121,7 +121,7 @@ public class TestMapaGoogle {
 		// INICIO EL SISTEMA
 
 		n = 8;
-		ret = sis.inicializarSistema(n);
+		sis.inicializarSistema(n);
 
 		// REGISTRO DOS CIUDADES
 
@@ -158,8 +158,10 @@ public class TestMapaGoogle {
 		// REGISTRO TRAMO DEL PUNTO 0 AL 1 Salto a una plantacion a 25KM
 
 		sis.registrarTramo(-31.50, -57.30, -34.58, -56.50, 25);
+		
+		ret = sis.listadoDePlantacionesEnCiudad(0.0, 0.0);
 
-		assertEquals(Retorno.Resultado.ERROR_1, sis.listadoDePlantacionesEnCiudad(0.0, 0.0).resultado);
+		assertEquals(Retorno.Resultado.ERROR_1, ret.resultado);
 
 	}
 	
