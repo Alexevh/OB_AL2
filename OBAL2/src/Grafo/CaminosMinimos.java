@@ -9,6 +9,16 @@ public class CaminosMinimos {
 	private int[] predec;
 	
 	private int objetivo;
+	
+	private ArrayList<Integer> objetivos;
+	
+	public ArrayList<Integer> getObjetivos() {
+		return objetivos;
+	}
+	
+	public void setObjetivos(ArrayList<Integer> value) {
+		objetivos = value;
+	}
 
 	public void setObjetivo(int value) {
 		objetivo = value;

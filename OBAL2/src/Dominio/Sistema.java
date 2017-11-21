@@ -29,8 +29,6 @@ public class Sistema implements ISistema {
 		return instancia;
 	}
 
-
-
 	public Productor buscarProductor(String cedula_productor) {
 
 		Productor p;
@@ -224,9 +222,6 @@ public class Sistema implements ISistema {
 		Retorno ret = new Retorno();
 		Punto puntoA = grafo.buscarPunto(coordXi, coordYi);
 		Punto puntoB = grafo.buscarPunto(coordXf, coordYf);
-		
-		
-		
 
 		if (puntoA == null) {
 			ret.resultado = Resultado.ERROR_1;
@@ -242,8 +237,6 @@ public class Sistema implements ISistema {
 			grafo.eliminarTramo(puntoA, puntoB, false);
 			ret.resultado = Resultado.OK;
 		}
-		
-		
 
 		return ret;
 	}
@@ -341,43 +334,28 @@ public class Sistema implements ISistema {
 	@Override
 	public Retorno listadoDePlantacionesEnCiudad(Double coordX, Double coordY) {
 		Retorno ret = new Retorno();
-       
-		String urlMapa = "";
 
-		Punto p = instancia.grafo.buscarPunto(coordX, coordY);
-		CaminosMinimos caminos;
-		
-		try {
-		 caminos = instancia.grafo.buscarCaminosMinimosPlantacion(p, 20);
-		} catch (Exception e)
-		{
-			/*Puede dar null, si es null tiramos error*/
+		Punto punto = grafo.buscarPunto(coordX, coordY);
+
+		if (punto == null) {
 			ret.resultado = Resultado.ERROR_1;
-			return ret;
-		}
+			ret.valorString = "Error: el punto de coordenadas " + coordX + " y " + coordY + " no existe.";
+		} else {
+			Punto ciudad = instancia.grafo.buscarPunto(coordX, coordY);
+			CaminosMinimos caminos = instancia.grafo.buscarCaminosMinimosPlantacion(ciudad, 20);
+			ArrayList<Integer> objetivos = caminos.getObjetivos();
+			String resString = "";
+			Punto p;
 			
-	
-		
-		for (int i = 0; i < caminos.getCostos().length; i++) {
-
-			try {
-				Punto p2 = instancia.getGrafo().getPuntos().getVectorHash()[i].getPunto();
-				int[] indiceCostos = caminos.getCostos();
-				int indice = indiceCostos[i];
-
-				if (p2.getTipo().equals(TipoPunto.PLANTACION) && indice < 20) {
-					urlMapa += p2.getCoordX().toString() + ";" + p2.getCoordY().toString() + "|";
+			for (int i = 0; i < objetivos.size(); i++) {
 				
-				}
-				
-				ret.resultado = Resultado.OK;
-			} catch (Exception e) {
-				ret.resultado = Resultado.ERROR_1;
+				p = grafo.buscarPunto(objetivos.get(i));
+				resString += p.getCoordX() + ";" + p.getCoordY() + "|";
 			}
-
+				ret.resultado = Resultado.OK;
+				ret.valorString = resString;
 		}
 
-	
 		return ret;
 	}
 
@@ -403,13 +381,15 @@ public class Sistema implements ISistema {
 	public Retorno listadoProductores() {
 		Retorno ret = new Retorno();
 
-		String listado = productoresArbol.listarAscendente();
-
-		ret.valorString = listado;
+		ArrayList<String> listado = productoresArbol.listarAscendente();
+		String lista = "";
+		for(String s:listado) {
+			lista += s;
+		}
+		ret.valorString = lista;
 		ret.resultado = Resultado.OK;
 
 		return ret;
 	}
-	
 
 }

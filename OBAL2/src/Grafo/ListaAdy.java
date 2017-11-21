@@ -87,7 +87,7 @@ public class ListaAdy {
 
 			if (nodo != null) {
 				unir(nodo.ant, nodo.sig);
-				if (nodo.destino==d)
+				if (inicio != null && inicio.destino==d)
 				{
 					inicio=nodo.sig;
 				}
@@ -112,9 +112,9 @@ public class ListaAdy {
 	public void unir(NodoListaAdy nodoA, NodoListaAdy nodoB) {
 		if(nodoA != null) {
 			nodoA.sig = nodoB;
-			if(nodoB != null) {
-				nodoB.ant = nodoA;
-			}
+		}
+		if(nodoB != null) {
+			nodoB.ant = nodoA;
 		}
 	}
 }
